@@ -1,0 +1,8 @@
+# Treat trained model checkpoints as binary (prevents git from attempting
+# text diffs/merges on them, and keeps line-ending normalization from
+# corrupting them on Windows checkouts).
+*.pt binary
+*.pth binary
+*.png binary
+*.jpg binary
+*.jpeg binary

@@ -1,0 +1,7 @@
+numpy>=1.26
+torch>=2.2
+matplotlib>=3.8
+
+# Optional, used only in ad-hoc diagnostics during development (not required
+# to run training/benchmark scripts):
+# scikit-learn>=1.4

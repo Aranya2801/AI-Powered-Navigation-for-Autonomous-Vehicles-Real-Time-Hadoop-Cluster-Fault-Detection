@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Training artifacts (large/binary, regenerate via scripts rather than commit by default)
+# Comment these out if you specifically want to version a trained checkpoint.
+# runs/*/policy_*.pt
+# runs/*/training_history.json
+
+# Logs
+*.log
