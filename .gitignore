@@ -31,3 +31,6 @@ Thumbs.db
 
 # Logs
 *.log
+runs/*.log
+.pytest_cache/
+runs/cluster/example_scores.npz
