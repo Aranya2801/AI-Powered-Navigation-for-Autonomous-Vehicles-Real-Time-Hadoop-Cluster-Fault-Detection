@@ -156,11 +156,9 @@ every bug found and fixed during development.
 
 ## Author
 
-**Aranya Ghosh** — AI/ML Research Engineer. GATE 2026 (Data Science & AI), research
-experience at IIIT Nagpur and IIT Kharagpur, BTech IT from KIIT University. Incoming
-MS-MITA student at Rutgers Business School (Fall 2026).
+**Aranya Ghosh** — AI/ML Research Engineer, research
+experience at IIIT Nagpur and IIT Kharagpur, BTech IT from KIIT University.
 
-- Website: [aranyaghosh.org](https://aranyaghosh.org)
 - GitHub: [@Aranya2801](https://github.com/Aranya2801)
 
 ## License
