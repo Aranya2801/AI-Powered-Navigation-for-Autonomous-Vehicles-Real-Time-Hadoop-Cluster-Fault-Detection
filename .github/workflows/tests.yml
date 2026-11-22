@@ -1,0 +1,25 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install numpy scikit-learn matplotlib pytest
+      - name: Unit tests
+        run: python -m pytest -q
+      - name: Smoke-test the committed checkpoint
+        run: |
+          python -m navigation.benchmark \
+            --ppo_checkpoint "PPO=runs/ppo_s0/policy_checkpoint.pt" \
+            --n_episodes 5 --out /tmp/smoke.json

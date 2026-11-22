@@ -1,42 +1,23 @@
 # Contributing
 
-This is currently a solo research/portfolio project, but contributions, issues, and
-suggestions are welcome.
-
-## Setup
+Issues and PRs are welcome.
 
 ```bash
-git clone https://github.com/Aranya2801/<repo-name>.git
-cd <repo-name>
-python -m venv venv && source venv/bin/activate  # or your preferred env manager
+git clone https://github.com/Aranya2801/AI-Powered-Navigation-for-Autonomous-Vehicles-Real-Time-Hadoop-Cluster-Fault-Detection.git
+cd AI-Powered-Navigation-for-Autonomous-Vehicles-Real-Time-Hadoop-Cluster-Fault-Detection
+python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
+python -m pytest -q
 ```
 
-## Running tests
+A few things to keep in mind:
 
-```bash
-python -m pytest tests/ -v
-```
+- If you change the reward, the observation or the sensor models, old checkpoints
+  are no longer valid. Retrain (`scripts/train_all.sh`) and re-run
+  `scripts/run_benchmarks.sh` before quoting numbers.
+- Don't tune anything on the test seeds (navigation 100000+, cluster 1000+). Use the
+  validation ranges (`--seed_base 300000` for navigation, clusters 100-103).
+- Numbers in the docs should come from `scripts/results_tables.py`, not be typed in.
 
-Tests are currently smoke/correctness tests for the core simulation and planning
-modules (environment dynamics, sensor fusion, A*/RRT correctness) rather than a
-full coverage suite — see [`docs/module1_results.md`](docs/module1_results.md) for
-what's been verified and how.
-
-## Code style
-
-- Type hints on public function signatures where practical.
-- Prefer clear, commented reward/algorithm logic over cleverness — this is a research
-  benchmark meant to be read, not just run.
-- If you change the reward function or observation encoding, retrain (BC warm-start +
-  PPO fine-tune) before submitting — old checkpoints are not compatible across reward/
-  observation changes, and this project's own development history is full of examples
-  of exactly that kind of regression going unnoticed without retraining.
-
-## Reporting issues
-
-Please include:
-- The command you ran
-- Full traceback or unexpected output
-- Whether you modified `simulation/env_core.py`, `navigation/observation.py`, or
-  `navigation/policy_ppo.py` (these three are the most failure-sensitive to changes)
+When reporting a bug, please include the command, the full traceback, and your
+Python / PyTorch versions.
