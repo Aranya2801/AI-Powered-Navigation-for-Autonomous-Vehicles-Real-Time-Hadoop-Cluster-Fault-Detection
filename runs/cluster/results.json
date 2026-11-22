@@ -1,0 +1,5810 @@
+{
+ "config": {
+  "out": "runs/cluster",
+  "fa_budget": 0.25,
+  "n_nodes": 40,
+  "days": 2.0,
+  "train_seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "val_seeds": [
+   100,
+   101,
+   102,
+   103
+  ],
+  "test_seeds": [
+   1000,
+   1001,
+   1002,
+   1003,
+   1004,
+   1005,
+   1006,
+   1007
+  ],
+  "grace_ticks": 10,
+  "tick_s": 30
+ },
+ "detectors": {
+  "static-threshold": {
+   "faults": 109,
+   "detected": 75,
+   "recall": 0.6880733944954128,
+   "fa_per_node_day": 4.2671875,
+   "precision": 0.03156028368794326,
+   "delay_median_min": 14.0,
+   "delay_mean_min": 32.32,
+   "delay_p90_min": 73.10000000000002,
+   "ms_per_tick": 0.01947000618489625,
+   "recall_by_kind": {
+    "disk": 0.72,
+    "memleak": 0.6111111111111112,
+    "network": 0.8947368421052632,
+    "cpu": 0.37037037037037035,
+    "crash": 0.95
+   },
+   "delay_median_by_kind": {
+    "disk": 25.25,
+    "memleak": 142.0,
+    "network": 12.0,
+    "cpu": 32.5,
+    "crash": 1.5
+   },
+   "threshold": 0.5,
+   "false_alarms": 2731,
+   "false_alarms_on_hotspots": 108
+  },
+  "ewma-zscore": {
+   "faults": 109,
+   "detected": 90,
+   "recall": 0.8256880733944955,
+   "fa_per_node_day": 0.2859375,
+   "precision": 0.42452830188679247,
+   "delay_median_min": 7.75,
+   "delay_mean_min": 23.72222222222222,
+   "delay_p90_min": 73.35000000000002,
+   "ms_per_tick": 0.051063045768224354,
+   "recall_by_kind": {
+    "disk": 1.0,
+    "memleak": 0.6666666666666666,
+    "network": 1.0,
+    "cpu": 0.5185185185185185,
+    "crash": 1.0
+   },
+   "delay_median_by_kind": {
+    "disk": 14.0,
+    "memleak": 81.0,
+    "network": 3.0,
+    "cpu": 33.25,
+    "crash": 1.5
+   },
+   "threshold": 11.911688506631181,
+   "false_alarms": 183,
+   "false_alarms_on_hotspots": 5
+  },
+  "peer-mad": {
+   "faults": 109,
+   "detected": 105,
+   "recall": 0.963302752293578,
+   "fa_per_node_day": 0.2390625,
+   "precision": 0.521875,
+   "delay_median_min": 12.0,
+   "delay_mean_min": 27.38095238095238,
+   "delay_p90_min": 81.30000000000001,
+   "ms_per_tick": 0.42218182376301017,
+   "recall_by_kind": {
+    "disk": 0.96,
+    "memleak": 1.0,
+    "network": 1.0,
+    "cpu": 0.8888888888888888,
+    "crash": 1.0
+   },
+   "delay_median_by_kind": {
+    "disk": 24.0,
+    "memleak": 68.75,
+    "network": 4.0,
+    "cpu": 11.75,
+    "crash": 1.5
+   },
+   "threshold": 8.833769766784046,
+   "false_alarms": 153,
+   "false_alarms_on_hotspots": 132
+  },
+  "window-ae": {
+   "faults": 109,
+   "detected": 97,
+   "recall": 0.8899082568807339,
+   "fa_per_node_day": 0.159375,
+   "precision": 0.5732217573221757,
+   "delay_median_min": 9.0,
+   "delay_mean_min": 22.067010309278352,
+   "delay_p90_min": 70.2,
+   "ms_per_tick": 0.8477383102213527,
+   "recall_by_kind": {
+    "disk": 1.0,
+    "memleak": 0.8333333333333334,
+    "network": 1.0,
+    "cpu": 0.6666666666666666,
+    "crash": 1.0
+   },
+   "delay_median_by_kind": {
+    "disk": 11.5,
+    "memleak": 77.0,
+    "network": 3.0,
+    "cpu": 15.25,
+    "crash": 1.5
+   },
+   "threshold": 1.5032512160087141,
+   "false_alarms": 102,
+   "false_alarms_on_hotspots": 0
+  },
+  "hybrid(peer-mad+window-ae)": {
+   "faults": 109,
+   "detected": 102,
+   "recall": 0.9357798165137615,
+   "fa_per_node_day": 0.2546875,
+   "precision": 0.4511784511784512,
+   "delay_median_min": 10.0,
+   "delay_mean_min": 22.323529411764707,
+   "delay_p90_min": 70.60000000000002,
+   "ms_per_tick": 1.3258997526909808,
+   "recall_by_kind": {
+    "disk": 1.0,
+    "memleak": 1.0,
+    "network": 1.0,
+    "cpu": 0.7407407407407407,
+    "crash": 1.0
+   },
+   "delay_median_by_kind": {
+    "disk": 12.5,
+    "memleak": 71.75,
+    "network": 3.0,
+    "cpu": 11.5,
+    "crash": 1.5
+   },
+   "threshold": 1.050625587744811,
+   "false_alarms": 163,
+   "false_alarms_on_hotspots": 88
+  }
+ },
+ "diagnosis": {
+  "detector": "peer-mad",
+  "n": 105,
+  "accuracy": 0.9333333333333333,
+  "labels": [
+   "disk",
+   "memleak",
+   "network",
+   "cpu",
+   "crash"
+  ],
+  "confusion": [
+   [
+    24,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    18,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    19,
+    0,
+    0
+   ],
+   [
+    0,
+    7,
+    0,
+    17,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    20
+   ]
+  ]
+ },
+ "sweep": {
+  "ewma-zscore": [
+   {
+    "threshold": 8.136387970105323,
+    "recall": 0.9724770642201835,
+    "fa_per_node_day": 10.0640625
+   },
+   {
+    "threshold": 8.5587210606654,
+    "recall": 0.963302752293578,
+    "fa_per_node_day": 8.1859375
+   },
+   {
+    "threshold": 9.053569219465098,
+    "recall": 0.963302752293578,
+    "fa_per_node_day": 6.234375
+   },
+   {
+    "threshold": 9.548844076670749,
+    "recall": 0.963302752293578,
+    "fa_per_node_day": 4.421875
+   },
+   {
+    "threshold": 10.053516196570618,
+    "recall": 0.963302752293578,
+    "fa_per_node_day": 2.58125
+   },
+   {
+    "threshold": 10.582024663350868,
+    "recall": 0.908256880733945,
+    "fa_per_node_day": 1.3390625
+   },
+   {
+    "threshold": 10.940774188823708,
+    "recall": 0.8807339449541285,
+    "fa_per_node_day": 0.8625
+   },
+   {
+    "threshold": 11.298154574931367,
+    "recall": 0.8348623853211009,
+    "fa_per_node_day": 0.5484375
+   },
+   {
+    "threshold": 11.740537757082661,
+    "recall": 0.8348623853211009,
+    "fa_per_node_day": 0.31875
+   },
+   {
+    "threshold": 12.32199459623902,
+    "recall": 0.8073394495412844,
+    "fa_per_node_day": 0.2140625
+   },
+   {
+    "threshold": 13.0544392999197,
+    "recall": 0.7889908256880734,
+    "fa_per_node_day": 0.1265625
+   },
+   {
+    "threshold": 13.781735451745178,
+    "recall": 0.7889908256880734,
+    "fa_per_node_day": 0.071875
+   },
+   {
+    "threshold": 14.612247553880463,
+    "recall": 0.7339449541284404,
+    "fa_per_node_day": 0.03125
+   },
+   {
+    "threshold": 15.955477343038071,
+    "recall": 0.7064220183486238,
+    "fa_per_node_day": 0.0078125
+   },
+   {
+    "threshold": 17.5539693457871,
+    "recall": 0.6788990825688074,
+    "fa_per_node_day": 0.0015625
+   },
+   {
+    "threshold": 19.02111951408747,
+    "recall": 0.6422018348623854,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 19.77576609318859,
+    "recall": 0.5871559633027523,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 19.993876397831862,
+    "recall": 0.5229357798165137,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 19.999995508491885,
+    "recall": 0.44954128440366975,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 19.999999998086906,
+    "recall": 0.43119266055045874,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 19.999999999998895,
+    "recall": 0.41284403669724773,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 19.999999999999993,
+    "recall": 0.25688073394495414,
+    "fa_per_node_day": 0.0
+   }
+  ],
+  "peer-mad": [
+   {
+    "threshold": 7.033401782462285,
+    "recall": 1.0,
+    "fa_per_node_day": 1.603125
+   },
+   {
+    "threshold": 7.862376484498657,
+    "recall": 0.9908256880733946,
+    "fa_per_node_day": 0.6328125
+   },
+   {
+    "threshold": 8.229733778061352,
+    "recall": 0.9908256880733946,
+    "fa_per_node_day": 0.4546875
+   },
+   {
+    "threshold": 8.392439848953199,
+    "recall": 0.981651376146789,
+    "fa_per_node_day": 0.396875
+   },
+   {
+    "threshold": 8.532890746649135,
+    "recall": 0.9724770642201835,
+    "fa_per_node_day": 0.340625
+   },
+   {
+    "threshold": 8.669085641237983,
+    "recall": 0.9724770642201835,
+    "fa_per_node_day": 0.2921875
+   },
+   {
+    "threshold": 8.80889642883199,
+    "recall": 0.963302752293578,
+    "fa_per_node_day": 0.24375
+   },
+   {
+    "threshold": 8.961922948451134,
+    "recall": 0.9541284403669725,
+    "fa_per_node_day": 0.2140625
+   },
+   {
+    "threshold": 9.146132785375935,
+    "recall": 0.944954128440367,
+    "fa_per_node_day": 0.1765625
+   },
+   {
+    "threshold": 9.40081880888944,
+    "recall": 0.908256880733945,
+    "fa_per_node_day": 0.1375
+   },
+   {
+    "threshold": 9.848464229385506,
+    "recall": 0.8807339449541285,
+    "fa_per_node_day": 0.0703125
+   },
+   {
+    "threshold": 10.758394091314099,
+    "recall": 0.8440366972477065,
+    "fa_per_node_day": 0.0140625
+   },
+   {
+    "threshold": 12.229250377013859,
+    "recall": 0.7798165137614679,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 14.25488457361228,
+    "recall": 0.6788990825688074,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 17.458900646073726,
+    "recall": 0.5596330275229358,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 22.95742653981657,
+    "recall": 0.45871559633027525,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 27.96541189798222,
+    "recall": 0.44954128440366975,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 29.50849639094893,
+    "recall": 0.42201834862385323,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 29.93511691877478,
+    "recall": 0.42201834862385323,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 29.995643556888595,
+    "recall": 0.41284403669724773,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 29.999834371822736,
+    "recall": 0.3944954128440367,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 29.999996310498858,
+    "recall": 0.3761467889908257,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 29.99999989464462,
+    "recall": 0.3761467889908257,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 29.999999996342765,
+    "recall": 0.3669724770642202,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 29.999999999843695,
+    "recall": 0.3577981651376147,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 29.999999999993452,
+    "recall": 0.3486238532110092,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 29.999999999999584,
+    "recall": 0.3394495412844037,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 29.999999999999975,
+    "recall": 0.3302752293577982,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 29.999999999999993,
+    "recall": 0.25688073394495414,
+    "fa_per_node_day": 0.0
+   }
+  ],
+  "window-ae": [
+   {
+    "threshold": 0.6745095449893879,
+    "recall": 0.9908256880733946,
+    "fa_per_node_day": 11.471875
+   },
+   {
+    "threshold": 0.7151712622442876,
+    "recall": 1.0,
+    "fa_per_node_day": 8.9859375
+   },
+   {
+    "threshold": 0.7600073755532885,
+    "recall": 1.0,
+    "fa_per_node_day": 6.8734375
+   },
+   {
+    "threshold": 0.8128253427077602,
+    "recall": 1.0,
+    "fa_per_node_day": 5.00625
+   },
+   {
+    "threshold": 0.8782549206608544,
+    "recall": 1.0,
+    "fa_per_node_day": 3.5765625
+   },
+   {
+    "threshold": 0.9641109061220596,
+    "recall": 0.981651376146789,
+    "fa_per_node_day": 2.35625
+   },
+   {
+    "threshold": 1.0800169999192564,
+    "recall": 0.963302752293578,
+    "fa_per_node_day": 1.4578125
+   },
+   {
+    "threshold": 1.23738424147175,
+    "recall": 0.963302752293578,
+    "fa_per_node_day": 0.7484375
+   },
+   {
+    "threshold": 1.47323238072473,
+    "recall": 0.8990825688073395,
+    "fa_per_node_day": 0.2078125
+   },
+   {
+    "threshold": 1.9047688054492786,
+    "recall": 0.8348623853211009,
+    "fa_per_node_day": 0.0109375
+   },
+   {
+    "threshold": 2.9051191897129485,
+    "recall": 0.7064220183486238,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 5.219082591827241,
+    "recall": 0.6513761467889908,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 8.225206255438987,
+    "recall": 0.6146788990825688,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 11.184292883025067,
+    "recall": 0.6055045871559633,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 14.263884630707448,
+    "recall": 0.5596330275229358,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 17.64694351590934,
+    "recall": 0.5137614678899083,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 20.816776229721654,
+    "recall": 0.48623853211009177,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 24.348671267172108,
+    "recall": 0.44036697247706424,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 28.25661683291454,
+    "recall": 0.43119266055045874,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 32.7775838474904,
+    "recall": 0.43119266055045874,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 37.44519970362048,
+    "recall": 0.43119266055045874,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 42.21240556925394,
+    "recall": 0.41284403669724773,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 46.79411058659853,
+    "recall": 0.41284403669724773,
+    "fa_per_node_day": 0.003125
+   },
+   {
+    "threshold": 51.58257235145116,
+    "recall": 0.41284403669724773,
+    "fa_per_node_day": 0.0015625
+   },
+   {
+    "threshold": 55.85862629874883,
+    "recall": 0.41284403669724773,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 61.539972305642166,
+    "recall": 0.3944954128440367,
+    "fa_per_node_day": 0.0015625
+   },
+   {
+    "threshold": 65.6608378648536,
+    "recall": 0.3761467889908257,
+    "fa_per_node_day": 0.0046875
+   },
+   {
+    "threshold": 70.1429162713695,
+    "recall": 0.3669724770642202,
+    "fa_per_node_day": 0.003125
+   },
+   {
+    "threshold": 75.28497352435485,
+    "recall": 0.3669724770642202,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 77.96474164412868,
+    "recall": 0.3577981651376147,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 81.2485184456201,
+    "recall": 0.3486238532110092,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 83.9573893514267,
+    "recall": 0.3394495412844037,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 86.47173868277254,
+    "recall": 0.3302752293577982,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 88.02894237895981,
+    "recall": 0.3211009174311927,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 90.46062990624762,
+    "recall": 0.3119266055045872,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 92.59128128988014,
+    "recall": 0.3119266055045872,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 94.3144679230629,
+    "recall": 0.29357798165137616,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 96.84664133352831,
+    "recall": 0.29357798165137616,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 100.01556912448298,
+    "recall": 0.29357798165137616,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 101.67452251554751,
+    "recall": 0.28440366972477066,
+    "fa_per_node_day": 0.0
+   }
+  ],
+  "hybrid(peer-mad+window-ae)": [
+   {
+    "threshold": 0.8361245859012635,
+    "recall": 1.0,
+    "fa_per_node_day": 1.7171875
+   },
+   {
+    "threshold": 0.9219127434936711,
+    "recall": 0.9908256880733946,
+    "fa_per_node_day": 0.84375
+   },
+   {
+    "threshold": 0.945628478412861,
+    "recall": 0.9908256880733946,
+    "fa_per_node_day": 0.70625
+   },
+   {
+    "threshold": 0.9644682363205573,
+    "recall": 0.981651376146789,
+    "fa_per_node_day": 0.590625
+   },
+   {
+    "threshold": 0.9830663439193901,
+    "recall": 0.981651376146789,
+    "fa_per_node_day": 0.4890625
+   },
+   {
+    "threshold": 1.0035908089591536,
+    "recall": 0.981651376146789,
+    "fa_per_node_day": 0.39375
+   },
+   {
+    "threshold": 1.0289023566502655,
+    "recall": 0.963302752293578,
+    "fa_per_node_day": 0.3171875
+   },
+   {
+    "threshold": 1.0700625811938191,
+    "recall": 0.9357798165137615,
+    "fa_per_node_day": 0.203125
+   },
+   {
+    "threshold": 1.1914760961672173,
+    "recall": 0.8899082568807339,
+    "fa_per_node_day": 0.0484375
+   },
+   {
+    "threshold": 1.5806574210979631,
+    "recall": 0.8348623853211009,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 2.6517949241168655,
+    "recall": 0.6788990825688074,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 3.4718632097198228,
+    "recall": 0.6513761467889908,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 5.471611243580266,
+    "recall": 0.6146788990825688,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 7.440069074229995,
+    "recall": 0.6055045871559633,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 9.488689900134936,
+    "recall": 0.5596330275229358,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 11.739184594018676,
+    "recall": 0.5137614678899083,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 13.847835949198384,
+    "recall": 0.48623853211009177,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 16.197340143732145,
+    "recall": 0.44036697247706424,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 18.7970024783607,
+    "recall": 0.43119266055045874,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 21.804461887959246,
+    "recall": 0.43119266055045874,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 24.909475744873383,
+    "recall": 0.43119266055045874,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 28.08073934663575,
+    "recall": 0.41284403669724773,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 31.128603182401996,
+    "recall": 0.41284403669724773,
+    "fa_per_node_day": 0.003125
+   },
+   {
+    "threshold": 34.31400673561946,
+    "recall": 0.41284403669724773,
+    "fa_per_node_day": 0.0015625
+   },
+   {
+    "threshold": 37.15854389731292,
+    "recall": 0.41284403669724773,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 40.937916198090356,
+    "recall": 0.3944954128440367,
+    "fa_per_node_day": 0.0015625
+   },
+   {
+    "threshold": 43.679218194274846,
+    "recall": 0.3761467889908257,
+    "fa_per_node_day": 0.0046875
+   },
+   {
+    "threshold": 46.66080793708328,
+    "recall": 0.3669724770642202,
+    "fa_per_node_day": 0.003125
+   },
+   {
+    "threshold": 50.08143198064005,
+    "recall": 0.3669724770642202,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 51.86408021084662,
+    "recall": 0.3577981651376147,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 54.04852999975829,
+    "recall": 0.3486238532110092,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 55.850538125185864,
+    "recall": 0.3394495412844037,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 57.52314567379087,
+    "recall": 0.3302752293577982,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 58.55903620200333,
+    "recall": 0.3211009174311927,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 60.176655067959864,
+    "recall": 0.3119266055045872,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 61.59401722336168,
+    "recall": 0.3119266055045872,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 62.740323718797626,
+    "recall": 0.29357798165137616,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 64.42478828699441,
+    "recall": 0.29357798165137616,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 66.53283766504082,
+    "recall": 0.29357798165137616,
+    "fa_per_node_day": 0.0
+   },
+   {
+    "threshold": 67.63641461438746,
+    "recall": 0.28440366972477066,
+    "fa_per_node_day": 0.0
+   }
+  ]
+ },
+ "events": {
+  "static-threshold": [
+   {
+    "kind": "cpu",
+    "node": 37,
+    "onset": 427,
+    "detected": true,
+    "alarm_tick": 516,
+    "delay_min": 44.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 12,
+    "onset": 837,
+    "detected": true,
+    "alarm_tick": 881,
+    "delay_min": 22.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "crash",
+    "node": 28,
+    "onset": 1605,
+    "detected": true,
+    "alarm_tick": 1608,
+    "delay_min": 1.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "cpu",
+    "node": 26,
+    "onset": 1661,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 3,
+    "onset": 1806,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1000
+   },
+   {
+    "kind": "disk",
+    "node": 15,
+    "onset": 2379,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 36,
+    "onset": 3278,
+    "detected": true,
+    "alarm_tick": 3303,
+    "delay_min": 12.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "disk",
+    "node": 4,
+    "onset": 3427,
+    "detected": true,
+    "alarm_tick": 3473,
+    "delay_min": 23.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "crash",
+    "node": 24,
+    "onset": 3669,
+    "detected": true,
+    "alarm_tick": 3672,
+    "delay_min": 1.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "disk",
+    "node": 4,
+    "onset": 4236,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1000
+   },
+   {
+    "kind": "memleak",
+    "node": 19,
+    "onset": 4807,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1000
+   },
+   {
+    "kind": "crash",
+    "node": 4,
+    "onset": 5243,
+    "detected": true,
+    "alarm_tick": 5246,
+    "delay_min": 1.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "cpu",
+    "node": 9,
+    "onset": 5388,
+    "detected": true,
+    "alarm_tick": 5411,
+    "delay_min": 11.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 10,
+    "onset": 5526,
+    "detected": true,
+    "alarm_tick": 5552,
+    "delay_min": 13.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 12,
+    "onset": 356,
+    "detected": true,
+    "alarm_tick": 365,
+    "delay_min": 4.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 24,
+    "onset": 370,
+    "detected": true,
+    "alarm_tick": 373,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "memleak",
+    "node": 21,
+    "onset": 594,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "disk",
+    "node": 16,
+    "onset": 1156,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 19,
+    "onset": 1341,
+    "detected": true,
+    "alarm_tick": 1411,
+    "delay_min": 35.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 21,
+    "onset": 1404,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "disk",
+    "node": 27,
+    "onset": 1936,
+    "detected": true,
+    "alarm_tick": 2003,
+    "delay_min": 33.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 38,
+    "onset": 2055,
+    "detected": true,
+    "alarm_tick": 2058,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 4,
+    "onset": 2172,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "memleak",
+    "node": 22,
+    "onset": 2724,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 9,
+    "onset": 3854,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "memleak",
+    "node": 17,
+    "onset": 4260,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 11,
+    "onset": 4351,
+    "detected": true,
+    "alarm_tick": 4354,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "network",
+    "node": 33,
+    "onset": 5287,
+    "detected": true,
+    "alarm_tick": 5313,
+    "delay_min": 13.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 8,
+    "onset": 5303,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 24,
+    "onset": 5406,
+    "detected": true,
+    "alarm_tick": 5409,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 29,
+    "onset": 5606,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 5,
+    "onset": 246,
+    "detected": true,
+    "alarm_tick": 249,
+    "delay_min": 1.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "cpu",
+    "node": 5,
+    "onset": 873,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1002
+   },
+   {
+    "kind": "crash",
+    "node": 18,
+    "onset": 904,
+    "detected": true,
+    "alarm_tick": 907,
+    "delay_min": 1.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "cpu",
+    "node": 29,
+    "onset": 1231,
+    "detected": true,
+    "alarm_tick": 1279,
+    "delay_min": 24.0,
+    "cluster": 1002
+   },
+   {
+    "kind": "disk",
+    "node": 23,
+    "onset": 3512,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1002
+   },
+   {
+    "kind": "memleak",
+    "node": 28,
+    "onset": 3752,
+    "detected": true,
+    "alarm_tick": 4044,
+    "delay_min": 146.0,
+    "cluster": 1002
+   },
+   {
+    "kind": "disk",
+    "node": 14,
+    "onset": 4158,
+    "detected": true,
+    "alarm_tick": 4209,
+    "delay_min": 25.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "disk",
+    "node": 10,
+    "onset": 4834,
+    "detected": true,
+    "alarm_tick": 4954,
+    "delay_min": 60.0,
+    "cluster": 1002
+   },
+   {
+    "kind": "network",
+    "node": 4,
+    "onset": 5524,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1002
+   },
+   {
+    "kind": "network",
+    "node": 19,
+    "onset": 155,
+    "detected": true,
+    "alarm_tick": 181,
+    "delay_min": 13.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 23,
+    "onset": 841,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1003
+   },
+   {
+    "kind": "disk",
+    "node": 22,
+    "onset": 1020,
+    "detected": true,
+    "alarm_tick": 1096,
+    "delay_min": 38.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 5,
+    "onset": 1153,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1003
+   },
+   {
+    "kind": "memleak",
+    "node": 24,
+    "onset": 1812,
+    "detected": true,
+    "alarm_tick": 1813,
+    "delay_min": 0.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 7,
+    "onset": 2583,
+    "detected": true,
+    "alarm_tick": 2606,
+    "delay_min": 11.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "memleak",
+    "node": 34,
+    "onset": 3335,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1003
+   },
+   {
+    "kind": "crash",
+    "node": 27,
+    "onset": 4382,
+    "detected": true,
+    "alarm_tick": 4385,
+    "delay_min": 1.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 14,
+    "onset": 4696,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1003
+   },
+   {
+    "kind": "network",
+    "node": 21,
+    "onset": 5172,
+    "detected": true,
+    "alarm_tick": 5193,
+    "delay_min": 10.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "network",
+    "node": 5,
+    "onset": 387,
+    "detected": true,
+    "alarm_tick": 398,
+    "delay_min": 5.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "network",
+    "node": 27,
+    "onset": 568,
+    "detected": true,
+    "alarm_tick": 592,
+    "delay_min": 12.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "cpu",
+    "node": 34,
+    "onset": 1245,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1004
+   },
+   {
+    "kind": "memleak",
+    "node": 33,
+    "onset": 1699,
+    "detected": true,
+    "alarm_tick": 2048,
+    "delay_min": 174.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 38,
+    "onset": 1705,
+    "detected": true,
+    "alarm_tick": 1745,
+    "delay_min": 20.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 10,
+    "onset": 1742,
+    "detected": true,
+    "alarm_tick": 1745,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 15,
+    "onset": 2721,
+    "detected": true,
+    "alarm_tick": 2742,
+    "delay_min": 10.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 13,
+    "onset": 2867,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 30,
+    "onset": 3047,
+    "detected": true,
+    "alarm_tick": 3097,
+    "delay_min": 25.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "network",
+    "node": 17,
+    "onset": 3164,
+    "detected": true,
+    "alarm_tick": 3192,
+    "delay_min": 14.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 11,
+    "onset": 3167,
+    "detected": true,
+    "alarm_tick": 3170,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 7,
+    "onset": 3649,
+    "detected": true,
+    "alarm_tick": 3652,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 36,
+    "onset": 3700,
+    "detected": true,
+    "alarm_tick": 3841,
+    "delay_min": 70.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "memleak",
+    "node": 30,
+    "onset": 4044,
+    "detected": true,
+    "alarm_tick": 4182,
+    "delay_min": 69.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 2,
+    "onset": 4237,
+    "detected": true,
+    "alarm_tick": 4240,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "cpu",
+    "node": 37,
+    "onset": 4619,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 15,
+    "onset": 4875,
+    "detected": true,
+    "alarm_tick": 4878,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 34,
+    "onset": 5095,
+    "detected": true,
+    "alarm_tick": 5152,
+    "delay_min": 28.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 22,
+    "onset": 539,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 34,
+    "onset": 710,
+    "detected": true,
+    "alarm_tick": 965,
+    "delay_min": 127.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 30,
+    "onset": 1759,
+    "detected": true,
+    "alarm_tick": 1908,
+    "delay_min": 74.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 22,
+    "onset": 1782,
+    "detected": true,
+    "alarm_tick": 1825,
+    "delay_min": 21.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "disk",
+    "node": 33,
+    "onset": 1818,
+    "detected": true,
+    "alarm_tick": 1827,
+    "delay_min": 4.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "network",
+    "node": 2,
+    "onset": 2835,
+    "detected": true,
+    "alarm_tick": 2866,
+    "delay_min": 15.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 8,
+    "onset": 2971,
+    "detected": true,
+    "alarm_tick": 3338,
+    "delay_min": 183.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 30,
+    "onset": 3707,
+    "detected": true,
+    "alarm_tick": 3991,
+    "delay_min": 142.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "disk",
+    "node": 6,
+    "onset": 3903,
+    "detected": true,
+    "alarm_tick": 3956,
+    "delay_min": 26.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 4,
+    "onset": 4357,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 23,
+    "onset": 4427,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1005
+   },
+   {
+    "kind": "crash",
+    "node": 7,
+    "onset": 4438,
+    "detected": true,
+    "alarm_tick": 4441,
+    "delay_min": 1.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "network",
+    "node": 25,
+    "onset": 4577,
+    "detected": true,
+    "alarm_tick": 4593,
+    "delay_min": 8.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 35,
+    "onset": 4640,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 10,
+    "onset": 4789,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1005
+   },
+   {
+    "kind": "crash",
+    "node": 5,
+    "onset": 342,
+    "detected": true,
+    "alarm_tick": 345,
+    "delay_min": 1.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 4,
+    "onset": 723,
+    "detected": true,
+    "alarm_tick": 757,
+    "delay_min": 17.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 31,
+    "onset": 848,
+    "detected": true,
+    "alarm_tick": 863,
+    "delay_min": 7.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "memleak",
+    "node": 32,
+    "onset": 1422,
+    "detected": true,
+    "alarm_tick": 1564,
+    "delay_min": 71.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 34,
+    "onset": 1444,
+    "detected": true,
+    "alarm_tick": 1467,
+    "delay_min": 11.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 17,
+    "onset": 2092,
+    "detected": true,
+    "alarm_tick": 2136,
+    "delay_min": 22.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 18,
+    "onset": 2155,
+    "detected": true,
+    "alarm_tick": 2194,
+    "delay_min": 19.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "cpu",
+    "node": 29,
+    "onset": 2335,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 16,
+    "onset": 2598,
+    "detected": true,
+    "alarm_tick": 2656,
+    "delay_min": 29.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 33,
+    "onset": 3283,
+    "detected": true,
+    "alarm_tick": 3312,
+    "delay_min": 14.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "memleak",
+    "node": 6,
+    "onset": 3939,
+    "detected": true,
+    "alarm_tick": 4033,
+    "delay_min": 47.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 1,
+    "onset": 3948,
+    "detected": true,
+    "alarm_tick": 3959,
+    "delay_min": 5.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "cpu",
+    "node": 37,
+    "onset": 4491,
+    "detected": true,
+    "alarm_tick": 4553,
+    "delay_min": 31.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "crash",
+    "node": 10,
+    "onset": 4882,
+    "detected": true,
+    "alarm_tick": 4885,
+    "delay_min": 1.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "crash",
+    "node": 28,
+    "onset": 141,
+    "detected": true,
+    "alarm_tick": 144,
+    "delay_min": 1.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 3,
+    "onset": 384,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 10,
+    "onset": 652,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1007
+   },
+   {
+    "kind": "memleak",
+    "node": 1,
+    "onset": 998,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 21,
+    "onset": 1489,
+    "detected": true,
+    "alarm_tick": 1588,
+    "delay_min": 49.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "memleak",
+    "node": 4,
+    "onset": 2162,
+    "detected": true,
+    "alarm_tick": 2615,
+    "delay_min": 226.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "memleak",
+    "node": 3,
+    "onset": 3274,
+    "detected": true,
+    "alarm_tick": 3617,
+    "delay_min": 171.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 36,
+    "onset": 3841,
+    "detected": true,
+    "alarm_tick": 3909,
+    "delay_min": 34.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "disk",
+    "node": 12,
+    "onset": 4167,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1007
+   },
+   {
+    "kind": "disk",
+    "node": 2,
+    "onset": 4206,
+    "detected": true,
+    "alarm_tick": 4263,
+    "delay_min": 28.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "network",
+    "node": 10,
+    "onset": 4731,
+    "detected": true,
+    "alarm_tick": 4754,
+    "delay_min": 11.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "disk",
+    "node": 13,
+    "onset": 4791,
+    "detected": true,
+    "alarm_tick": 4839,
+    "delay_min": 24.0,
+    "cluster": 1007
+   }
+  ],
+  "ewma-zscore": [
+   {
+    "kind": "cpu",
+    "node": 37,
+    "onset": 427,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 12,
+    "onset": 837,
+    "detected": true,
+    "alarm_tick": 851,
+    "delay_min": 7.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "crash",
+    "node": 28,
+    "onset": 1605,
+    "detected": true,
+    "alarm_tick": 1608,
+    "delay_min": 1.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "cpu",
+    "node": 26,
+    "onset": 1661,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 3,
+    "onset": 1806,
+    "detected": true,
+    "alarm_tick": 1816,
+    "delay_min": 5.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "disk",
+    "node": 15,
+    "onset": 2379,
+    "detected": true,
+    "alarm_tick": 2409,
+    "delay_min": 15.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 36,
+    "onset": 3278,
+    "detected": true,
+    "alarm_tick": 3285,
+    "delay_min": 3.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "disk",
+    "node": 4,
+    "onset": 3427,
+    "detected": true,
+    "alarm_tick": 3447,
+    "delay_min": 10.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "crash",
+    "node": 24,
+    "onset": 3669,
+    "detected": true,
+    "alarm_tick": 3672,
+    "delay_min": 1.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "disk",
+    "node": 4,
+    "onset": 4236,
+    "detected": true,
+    "alarm_tick": 4258,
+    "delay_min": 11.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "memleak",
+    "node": 19,
+    "onset": 4807,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1000
+   },
+   {
+    "kind": "crash",
+    "node": 4,
+    "onset": 5243,
+    "detected": true,
+    "alarm_tick": 5246,
+    "delay_min": 1.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "cpu",
+    "node": 9,
+    "onset": 5388,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 10,
+    "onset": 5526,
+    "detected": true,
+    "alarm_tick": 5531,
+    "delay_min": 2.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 12,
+    "onset": 356,
+    "detected": true,
+    "alarm_tick": 360,
+    "delay_min": 2.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 24,
+    "onset": 370,
+    "detected": true,
+    "alarm_tick": 373,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "memleak",
+    "node": 21,
+    "onset": 594,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "disk",
+    "node": 16,
+    "onset": 1156,
+    "detected": true,
+    "alarm_tick": 1200,
+    "delay_min": 22.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 19,
+    "onset": 1341,
+    "detected": true,
+    "alarm_tick": 1420,
+    "delay_min": 39.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 21,
+    "onset": 1404,
+    "detected": true,
+    "alarm_tick": 1407,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "disk",
+    "node": 27,
+    "onset": 1936,
+    "detected": true,
+    "alarm_tick": 1978,
+    "delay_min": 21.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 38,
+    "onset": 2055,
+    "detected": true,
+    "alarm_tick": 2058,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 4,
+    "onset": 2172,
+    "detected": true,
+    "alarm_tick": 2298,
+    "delay_min": 63.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "memleak",
+    "node": 22,
+    "onset": 2724,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 9,
+    "onset": 3854,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "memleak",
+    "node": 17,
+    "onset": 4260,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 11,
+    "onset": 4351,
+    "detected": true,
+    "alarm_tick": 4354,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "network",
+    "node": 33,
+    "onset": 5287,
+    "detected": true,
+    "alarm_tick": 5295,
+    "delay_min": 4.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 8,
+    "onset": 5303,
+    "detected": true,
+    "alarm_tick": 5311,
+    "delay_min": 4.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 24,
+    "onset": 5406,
+    "detected": true,
+    "alarm_tick": 5409,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 29,
+    "onset": 5606,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 5,
+    "onset": 246,
+    "detected": true,
+    "alarm_tick": 249,
+    "delay_min": 1.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "cpu",
+    "node": 5,
+    "onset": 873,
+    "detected": true,
+    "alarm_tick": 942,
+    "delay_min": 34.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "crash",
+    "node": 18,
+    "onset": 904,
+    "detected": true,
+    "alarm_tick": 907,
+    "delay_min": 1.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "cpu",
+    "node": 29,
+    "onset": 1231,
+    "detected": true,
+    "alarm_tick": 1289,
+    "delay_min": 29.0,
+    "cluster": 1002
+   },
+   {
+    "kind": "disk",
+    "node": 23,
+    "onset": 3512,
+    "detected": true,
+    "alarm_tick": 3557,
+    "delay_min": 22.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "memleak",
+    "node": 28,
+    "onset": 3752,
+    "detected": true,
+    "alarm_tick": 4042,
+    "delay_min": 145.0,
+    "cluster": 1002
+   },
+   {
+    "kind": "disk",
+    "node": 14,
+    "onset": 4158,
+    "detected": true,
+    "alarm_tick": 4182,
+    "delay_min": 12.0,
+    "cluster": 1002
+   },
+   {
+    "kind": "disk",
+    "node": 10,
+    "onset": 4834,
+    "detected": true,
+    "alarm_tick": 4908,
+    "delay_min": 37.0,
+    "cluster": 1002
+   },
+   {
+    "kind": "network",
+    "node": 4,
+    "onset": 5524,
+    "detected": true,
+    "alarm_tick": 5532,
+    "delay_min": 4.0,
+    "cluster": 1002
+   },
+   {
+    "kind": "network",
+    "node": 19,
+    "onset": 155,
+    "detected": true,
+    "alarm_tick": 162,
+    "delay_min": 3.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 23,
+    "onset": 841,
+    "detected": true,
+    "alarm_tick": 1013,
+    "delay_min": 86.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "disk",
+    "node": 22,
+    "onset": 1020,
+    "detected": true,
+    "alarm_tick": 1054,
+    "delay_min": 17.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 5,
+    "onset": 1153,
+    "detected": true,
+    "alarm_tick": 1164,
+    "delay_min": 5.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "memleak",
+    "node": 24,
+    "onset": 1812,
+    "detected": true,
+    "alarm_tick": 1958,
+    "delay_min": 73.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 7,
+    "onset": 2583,
+    "detected": true,
+    "alarm_tick": 2615,
+    "delay_min": 16.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "memleak",
+    "node": 34,
+    "onset": 3335,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1003
+   },
+   {
+    "kind": "crash",
+    "node": 27,
+    "onset": 4382,
+    "detected": true,
+    "alarm_tick": 4385,
+    "delay_min": 1.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 14,
+    "onset": 4696,
+    "detected": true,
+    "alarm_tick": 4710,
+    "delay_min": 7.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "network",
+    "node": 21,
+    "onset": 5172,
+    "detected": true,
+    "alarm_tick": 5178,
+    "delay_min": 3.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "network",
+    "node": 5,
+    "onset": 387,
+    "detected": true,
+    "alarm_tick": 392,
+    "delay_min": 2.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "network",
+    "node": 27,
+    "onset": 568,
+    "detected": true,
+    "alarm_tick": 575,
+    "delay_min": 3.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "cpu",
+    "node": 34,
+    "onset": 1245,
+    "detected": true,
+    "alarm_tick": 1388,
+    "delay_min": 71.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "memleak",
+    "node": 33,
+    "onset": 1699,
+    "detected": true,
+    "alarm_tick": 1852,
+    "delay_min": 76.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 38,
+    "onset": 1705,
+    "detected": true,
+    "alarm_tick": 1732,
+    "delay_min": 13.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 10,
+    "onset": 1742,
+    "detected": true,
+    "alarm_tick": 1745,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 15,
+    "onset": 2721,
+    "detected": true,
+    "alarm_tick": 2737,
+    "delay_min": 8.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 13,
+    "onset": 2867,
+    "detected": true,
+    "alarm_tick": 2925,
+    "delay_min": 29.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 30,
+    "onset": 3047,
+    "detected": true,
+    "alarm_tick": 3067,
+    "delay_min": 10.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "network",
+    "node": 17,
+    "onset": 3164,
+    "detected": true,
+    "alarm_tick": 3171,
+    "delay_min": 3.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 11,
+    "onset": 3167,
+    "detected": true,
+    "alarm_tick": 3170,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 7,
+    "onset": 3649,
+    "detected": true,
+    "alarm_tick": 3652,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 36,
+    "onset": 3700,
+    "detected": true,
+    "alarm_tick": 3732,
+    "delay_min": 16.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "memleak",
+    "node": 30,
+    "onset": 4044,
+    "detected": true,
+    "alarm_tick": 4298,
+    "delay_min": 127.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 2,
+    "onset": 4237,
+    "detected": true,
+    "alarm_tick": 4240,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "cpu",
+    "node": 37,
+    "onset": 4619,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 15,
+    "onset": 4875,
+    "detected": true,
+    "alarm_tick": 4878,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 34,
+    "onset": 5095,
+    "detected": true,
+    "alarm_tick": 5126,
+    "delay_min": 15.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 22,
+    "onset": 539,
+    "detected": true,
+    "alarm_tick": 567,
+    "delay_min": 14.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 34,
+    "onset": 710,
+    "detected": true,
+    "alarm_tick": 880,
+    "delay_min": 85.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 30,
+    "onset": 1759,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 22,
+    "onset": 1782,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1005
+   },
+   {
+    "kind": "disk",
+    "node": 33,
+    "onset": 1818,
+    "detected": true,
+    "alarm_tick": 1844,
+    "delay_min": 13.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "network",
+    "node": 2,
+    "onset": 2835,
+    "detected": true,
+    "alarm_tick": 2841,
+    "delay_min": 3.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 8,
+    "onset": 2971,
+    "detected": true,
+    "alarm_tick": 3060,
+    "delay_min": 44.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 30,
+    "onset": 3707,
+    "detected": true,
+    "alarm_tick": 3803,
+    "delay_min": 48.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "disk",
+    "node": 6,
+    "onset": 3903,
+    "detected": true,
+    "alarm_tick": 3937,
+    "delay_min": 17.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 4,
+    "onset": 4357,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 23,
+    "onset": 4427,
+    "detected": true,
+    "alarm_tick": 4556,
+    "delay_min": 64.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "crash",
+    "node": 7,
+    "onset": 4438,
+    "detected": true,
+    "alarm_tick": 4441,
+    "delay_min": 1.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "network",
+    "node": 25,
+    "onset": 4577,
+    "detected": true,
+    "alarm_tick": 4596,
+    "delay_min": 9.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 35,
+    "onset": 4640,
+    "detected": true,
+    "alarm_tick": 4964,
+    "delay_min": 162.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 10,
+    "onset": 4789,
+    "detected": true,
+    "alarm_tick": 4823,
+    "delay_min": 17.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "crash",
+    "node": 5,
+    "onset": 342,
+    "detected": true,
+    "alarm_tick": 345,
+    "delay_min": 1.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 4,
+    "onset": 723,
+    "detected": true,
+    "alarm_tick": 734,
+    "delay_min": 5.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 31,
+    "onset": 848,
+    "detected": true,
+    "alarm_tick": 852,
+    "delay_min": 2.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "memleak",
+    "node": 32,
+    "onset": 1422,
+    "detected": true,
+    "alarm_tick": 1643,
+    "delay_min": 110.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 34,
+    "onset": 1444,
+    "detected": true,
+    "alarm_tick": 1450,
+    "delay_min": 3.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 17,
+    "onset": 2092,
+    "detected": true,
+    "alarm_tick": 2125,
+    "delay_min": 16.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 18,
+    "onset": 2155,
+    "detected": true,
+    "alarm_tick": 2170,
+    "delay_min": 7.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "cpu",
+    "node": 29,
+    "onset": 2335,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 16,
+    "onset": 2598,
+    "detected": true,
+    "alarm_tick": 2610,
+    "delay_min": 6.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 33,
+    "onset": 3283,
+    "detected": true,
+    "alarm_tick": 3289,
+    "delay_min": 3.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "memleak",
+    "node": 6,
+    "onset": 3939,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 1,
+    "onset": 3948,
+    "detected": true,
+    "alarm_tick": 3952,
+    "delay_min": 2.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "cpu",
+    "node": 37,
+    "onset": 4491,
+    "detected": true,
+    "alarm_tick": 4564,
+    "delay_min": 36.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "crash",
+    "node": 10,
+    "onset": 4882,
+    "detected": true,
+    "alarm_tick": 4885,
+    "delay_min": 1.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "crash",
+    "node": 28,
+    "onset": 141,
+    "detected": true,
+    "alarm_tick": 144,
+    "delay_min": 1.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 3,
+    "onset": 384,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 10,
+    "onset": 652,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1007
+   },
+   {
+    "kind": "memleak",
+    "node": 1,
+    "onset": 998,
+    "detected": true,
+    "alarm_tick": 1152,
+    "delay_min": 77.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 21,
+    "onset": 1489,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1007
+   },
+   {
+    "kind": "memleak",
+    "node": 4,
+    "onset": 2162,
+    "detected": true,
+    "alarm_tick": 2439,
+    "delay_min": 138.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "memleak",
+    "node": 3,
+    "onset": 3274,
+    "detected": true,
+    "alarm_tick": 3393,
+    "delay_min": 59.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 36,
+    "onset": 3841,
+    "detected": true,
+    "alarm_tick": 3905,
+    "delay_min": 32.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "disk",
+    "node": 12,
+    "onset": 4167,
+    "detected": true,
+    "alarm_tick": 4227,
+    "delay_min": 30.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "disk",
+    "node": 2,
+    "onset": 4206,
+    "detected": true,
+    "alarm_tick": 4219,
+    "delay_min": 6.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "network",
+    "node": 10,
+    "onset": 4731,
+    "detected": true,
+    "alarm_tick": 4734,
+    "delay_min": 1.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "disk",
+    "node": 13,
+    "onset": 4791,
+    "detected": true,
+    "alarm_tick": 4809,
+    "delay_min": 9.0,
+    "cluster": 1007
+   }
+  ],
+  "peer-mad": [
+   {
+    "kind": "cpu",
+    "node": 37,
+    "onset": 427,
+    "detected": true,
+    "alarm_tick": 496,
+    "delay_min": 34.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 12,
+    "onset": 837,
+    "detected": true,
+    "alarm_tick": 852,
+    "delay_min": 7.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "crash",
+    "node": 28,
+    "onset": 1605,
+    "detected": true,
+    "alarm_tick": 1608,
+    "delay_min": 1.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "cpu",
+    "node": 26,
+    "onset": 1661,
+    "detected": true,
+    "alarm_tick": 1680,
+    "delay_min": 9.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 3,
+    "onset": 1806,
+    "detected": true,
+    "alarm_tick": 1818,
+    "delay_min": 6.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "disk",
+    "node": 15,
+    "onset": 2379,
+    "detected": true,
+    "alarm_tick": 2439,
+    "delay_min": 30.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 36,
+    "onset": 3278,
+    "detected": true,
+    "alarm_tick": 3286,
+    "delay_min": 4.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "disk",
+    "node": 4,
+    "onset": 3427,
+    "detected": true,
+    "alarm_tick": 3463,
+    "delay_min": 18.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "crash",
+    "node": 24,
+    "onset": 3669,
+    "detected": true,
+    "alarm_tick": 3672,
+    "delay_min": 1.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "disk",
+    "node": 4,
+    "onset": 4236,
+    "detected": true,
+    "alarm_tick": 4260,
+    "delay_min": 12.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "memleak",
+    "node": 19,
+    "onset": 4807,
+    "detected": true,
+    "alarm_tick": 5112,
+    "delay_min": 152.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "crash",
+    "node": 4,
+    "onset": 5243,
+    "detected": true,
+    "alarm_tick": 5246,
+    "delay_min": 1.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "cpu",
+    "node": 9,
+    "onset": 5388,
+    "detected": true,
+    "alarm_tick": 5409,
+    "delay_min": 10.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 10,
+    "onset": 5526,
+    "detected": true,
+    "alarm_tick": 5533,
+    "delay_min": 3.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 12,
+    "onset": 356,
+    "detected": true,
+    "alarm_tick": 360,
+    "delay_min": 2.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 24,
+    "onset": 370,
+    "detected": true,
+    "alarm_tick": 373,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "memleak",
+    "node": 21,
+    "onset": 594,
+    "detected": true,
+    "alarm_tick": 716,
+    "delay_min": 61.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "disk",
+    "node": 16,
+    "onset": 1156,
+    "detected": true,
+    "alarm_tick": 1245,
+    "delay_min": 44.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 19,
+    "onset": 1341,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 21,
+    "onset": 1404,
+    "detected": true,
+    "alarm_tick": 1407,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "disk",
+    "node": 27,
+    "onset": 1936,
+    "detected": true,
+    "alarm_tick": 2098,
+    "delay_min": 81.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 38,
+    "onset": 2055,
+    "detected": true,
+    "alarm_tick": 2058,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 4,
+    "onset": 2172,
+    "detected": true,
+    "alarm_tick": 2193,
+    "delay_min": 10.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "memleak",
+    "node": 22,
+    "onset": 2724,
+    "detected": true,
+    "alarm_tick": 2947,
+    "delay_min": 111.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 9,
+    "onset": 3854,
+    "detected": true,
+    "alarm_tick": 4049,
+    "delay_min": 97.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "memleak",
+    "node": 17,
+    "onset": 4260,
+    "detected": true,
+    "alarm_tick": 4508,
+    "delay_min": 124.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 11,
+    "onset": 4351,
+    "detected": true,
+    "alarm_tick": 4354,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "network",
+    "node": 33,
+    "onset": 5287,
+    "detected": true,
+    "alarm_tick": 5296,
+    "delay_min": 4.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 8,
+    "onset": 5303,
+    "detected": true,
+    "alarm_tick": 5325,
+    "delay_min": 11.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 24,
+    "onset": 5406,
+    "detected": true,
+    "alarm_tick": 5409,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 29,
+    "onset": 5606,
+    "detected": true,
+    "alarm_tick": 5627,
+    "delay_min": 10.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 5,
+    "onset": 246,
+    "detected": true,
+    "alarm_tick": 249,
+    "delay_min": 1.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "cpu",
+    "node": 5,
+    "onset": 873,
+    "detected": true,
+    "alarm_tick": 916,
+    "delay_min": 21.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "crash",
+    "node": 18,
+    "onset": 904,
+    "detected": true,
+    "alarm_tick": 907,
+    "delay_min": 1.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "cpu",
+    "node": 29,
+    "onset": 1231,
+    "detected": true,
+    "alarm_tick": 1244,
+    "delay_min": 6.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "disk",
+    "node": 23,
+    "onset": 3512,
+    "detected": true,
+    "alarm_tick": 3586,
+    "delay_min": 37.0,
+    "cluster": 1002
+   },
+   {
+    "kind": "memleak",
+    "node": 28,
+    "onset": 3752,
+    "detected": true,
+    "alarm_tick": 3916,
+    "delay_min": 82.0,
+    "cluster": 1002
+   },
+   {
+    "kind": "disk",
+    "node": 14,
+    "onset": 4158,
+    "detected": true,
+    "alarm_tick": 4207,
+    "delay_min": 24.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "disk",
+    "node": 10,
+    "onset": 4834,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1002
+   },
+   {
+    "kind": "network",
+    "node": 4,
+    "onset": 5524,
+    "detected": true,
+    "alarm_tick": 5532,
+    "delay_min": 4.0,
+    "cluster": 1002
+   },
+   {
+    "kind": "network",
+    "node": 19,
+    "onset": 155,
+    "detected": true,
+    "alarm_tick": 162,
+    "delay_min": 3.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 23,
+    "onset": 841,
+    "detected": true,
+    "alarm_tick": 898,
+    "delay_min": 28.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "disk",
+    "node": 22,
+    "onset": 1020,
+    "detected": true,
+    "alarm_tick": 1055,
+    "delay_min": 17.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 5,
+    "onset": 1153,
+    "detected": true,
+    "alarm_tick": 1162,
+    "delay_min": 4.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "memleak",
+    "node": 24,
+    "onset": 1812,
+    "detected": true,
+    "alarm_tick": 1937,
+    "delay_min": 62.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 7,
+    "onset": 2583,
+    "detected": true,
+    "alarm_tick": 2606,
+    "delay_min": 11.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "memleak",
+    "node": 34,
+    "onset": 3335,
+    "detected": true,
+    "alarm_tick": 3591,
+    "delay_min": 128.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "crash",
+    "node": 27,
+    "onset": 4382,
+    "detected": true,
+    "alarm_tick": 4385,
+    "delay_min": 1.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 14,
+    "onset": 4696,
+    "detected": true,
+    "alarm_tick": 4712,
+    "delay_min": 8.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "network",
+    "node": 21,
+    "onset": 5172,
+    "detected": true,
+    "alarm_tick": 5179,
+    "delay_min": 3.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "network",
+    "node": 5,
+    "onset": 387,
+    "detected": true,
+    "alarm_tick": 392,
+    "delay_min": 2.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "network",
+    "node": 27,
+    "onset": 568,
+    "detected": true,
+    "alarm_tick": 577,
+    "delay_min": 4.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "cpu",
+    "node": 34,
+    "onset": 1245,
+    "detected": true,
+    "alarm_tick": 1273,
+    "delay_min": 14.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "memleak",
+    "node": 33,
+    "onset": 1699,
+    "detected": true,
+    "alarm_tick": 1796,
+    "delay_min": 48.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 38,
+    "onset": 1705,
+    "detected": true,
+    "alarm_tick": 1734,
+    "delay_min": 14.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 10,
+    "onset": 1742,
+    "detected": true,
+    "alarm_tick": 1745,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 15,
+    "onset": 2721,
+    "detected": true,
+    "alarm_tick": 2752,
+    "delay_min": 15.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 13,
+    "onset": 2867,
+    "detected": true,
+    "alarm_tick": 3128,
+    "delay_min": 130.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 30,
+    "onset": 3047,
+    "detected": true,
+    "alarm_tick": 3102,
+    "delay_min": 27.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "network",
+    "node": 17,
+    "onset": 3164,
+    "detected": true,
+    "alarm_tick": 3173,
+    "delay_min": 4.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 11,
+    "onset": 3167,
+    "detected": true,
+    "alarm_tick": 3170,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 7,
+    "onset": 3649,
+    "detected": true,
+    "alarm_tick": 3652,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 36,
+    "onset": 3700,
+    "detected": true,
+    "alarm_tick": 3769,
+    "delay_min": 34.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "memleak",
+    "node": 30,
+    "onset": 4044,
+    "detected": true,
+    "alarm_tick": 4203,
+    "delay_min": 79.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 2,
+    "onset": 4237,
+    "detected": true,
+    "alarm_tick": 4240,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "cpu",
+    "node": 37,
+    "onset": 4619,
+    "detected": true,
+    "alarm_tick": 4782,
+    "delay_min": 81.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 15,
+    "onset": 4875,
+    "detected": true,
+    "alarm_tick": 4878,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 34,
+    "onset": 5095,
+    "detected": true,
+    "alarm_tick": 5142,
+    "delay_min": 23.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 22,
+    "onset": 539,
+    "detected": true,
+    "alarm_tick": 611,
+    "delay_min": 36.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 34,
+    "onset": 710,
+    "detected": true,
+    "alarm_tick": 789,
+    "delay_min": 39.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 30,
+    "onset": 1759,
+    "detected": true,
+    "alarm_tick": 1783,
+    "delay_min": 12.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 22,
+    "onset": 1782,
+    "detected": true,
+    "alarm_tick": 1816,
+    "delay_min": 17.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "disk",
+    "node": 33,
+    "onset": 1818,
+    "detected": true,
+    "alarm_tick": 1853,
+    "delay_min": 17.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "network",
+    "node": 2,
+    "onset": 2835,
+    "detected": true,
+    "alarm_tick": 2843,
+    "delay_min": 4.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 8,
+    "onset": 2971,
+    "detected": true,
+    "alarm_tick": 3076,
+    "delay_min": 52.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 30,
+    "onset": 3707,
+    "detected": true,
+    "alarm_tick": 3777,
+    "delay_min": 35.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "disk",
+    "node": 6,
+    "onset": 3903,
+    "detected": true,
+    "alarm_tick": 3958,
+    "delay_min": 27.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 4,
+    "onset": 4357,
+    "detected": true,
+    "alarm_tick": 4396,
+    "delay_min": 19.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 23,
+    "onset": 4427,
+    "detected": true,
+    "alarm_tick": 4590,
+    "delay_min": 81.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "crash",
+    "node": 7,
+    "onset": 4438,
+    "detected": true,
+    "alarm_tick": 4441,
+    "delay_min": 1.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "network",
+    "node": 25,
+    "onset": 4577,
+    "detected": true,
+    "alarm_tick": 4596,
+    "delay_min": 9.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 35,
+    "onset": 4640,
+    "detected": true,
+    "alarm_tick": 4845,
+    "delay_min": 102.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 10,
+    "onset": 4789,
+    "detected": true,
+    "alarm_tick": 4813,
+    "delay_min": 12.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "crash",
+    "node": 5,
+    "onset": 342,
+    "detected": true,
+    "alarm_tick": 345,
+    "delay_min": 1.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 4,
+    "onset": 723,
+    "detected": true,
+    "alarm_tick": 747,
+    "delay_min": 12.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 31,
+    "onset": 848,
+    "detected": true,
+    "alarm_tick": 853,
+    "delay_min": 2.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "memleak",
+    "node": 32,
+    "onset": 1422,
+    "detected": true,
+    "alarm_tick": 1526,
+    "delay_min": 52.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 34,
+    "onset": 1444,
+    "detected": true,
+    "alarm_tick": 1453,
+    "delay_min": 4.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 17,
+    "onset": 2092,
+    "detected": true,
+    "alarm_tick": 2131,
+    "delay_min": 19.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 18,
+    "onset": 2155,
+    "detected": true,
+    "alarm_tick": 2189,
+    "delay_min": 17.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "cpu",
+    "node": 29,
+    "onset": 2335,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 16,
+    "onset": 2598,
+    "detected": true,
+    "alarm_tick": 2636,
+    "delay_min": 19.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 33,
+    "onset": 3283,
+    "detected": true,
+    "alarm_tick": 3291,
+    "delay_min": 4.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "memleak",
+    "node": 6,
+    "onset": 3939,
+    "detected": true,
+    "alarm_tick": 4238,
+    "delay_min": 149.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 1,
+    "onset": 3948,
+    "detected": true,
+    "alarm_tick": 3953,
+    "delay_min": 2.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "cpu",
+    "node": 37,
+    "onset": 4491,
+    "detected": true,
+    "alarm_tick": 4509,
+    "delay_min": 9.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "crash",
+    "node": 10,
+    "onset": 4882,
+    "detected": true,
+    "alarm_tick": 4885,
+    "delay_min": 1.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "crash",
+    "node": 28,
+    "onset": 141,
+    "detected": true,
+    "alarm_tick": 144,
+    "delay_min": 1.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 3,
+    "onset": 384,
+    "detected": true,
+    "alarm_tick": 403,
+    "delay_min": 9.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 10,
+    "onset": 652,
+    "detected": true,
+    "alarm_tick": 694,
+    "delay_min": 21.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "memleak",
+    "node": 1,
+    "onset": 998,
+    "detected": true,
+    "alarm_tick": 1081,
+    "delay_min": 41.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 21,
+    "onset": 1489,
+    "detected": true,
+    "alarm_tick": 1510,
+    "delay_min": 10.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "memleak",
+    "node": 4,
+    "onset": 2162,
+    "detected": true,
+    "alarm_tick": 2312,
+    "delay_min": 75.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "memleak",
+    "node": 3,
+    "onset": 3274,
+    "detected": true,
+    "alarm_tick": 3377,
+    "delay_min": 51.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 36,
+    "onset": 3841,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1007
+   },
+   {
+    "kind": "disk",
+    "node": 12,
+    "onset": 4167,
+    "detected": true,
+    "alarm_tick": 4287,
+    "delay_min": 60.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "disk",
+    "node": 2,
+    "onset": 4206,
+    "detected": true,
+    "alarm_tick": 4242,
+    "delay_min": 18.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "network",
+    "node": 10,
+    "onset": 4731,
+    "detected": true,
+    "alarm_tick": 4737,
+    "delay_min": 3.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "disk",
+    "node": 13,
+    "onset": 4791,
+    "detected": true,
+    "alarm_tick": 4846,
+    "delay_min": 27.5,
+    "cluster": 1007
+   }
+  ],
+  "window-ae": [
+   {
+    "kind": "cpu",
+    "node": 37,
+    "onset": 427,
+    "detected": true,
+    "alarm_tick": 518,
+    "delay_min": 45.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 12,
+    "onset": 837,
+    "detected": true,
+    "alarm_tick": 845,
+    "delay_min": 4.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "crash",
+    "node": 28,
+    "onset": 1605,
+    "detected": true,
+    "alarm_tick": 1608,
+    "delay_min": 1.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "cpu",
+    "node": 26,
+    "onset": 1661,
+    "detected": true,
+    "alarm_tick": 1709,
+    "delay_min": 24.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 3,
+    "onset": 1806,
+    "detected": true,
+    "alarm_tick": 1813,
+    "delay_min": 3.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "disk",
+    "node": 15,
+    "onset": 2379,
+    "detected": true,
+    "alarm_tick": 2407,
+    "delay_min": 14.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 36,
+    "onset": 3278,
+    "detected": true,
+    "alarm_tick": 3284,
+    "delay_min": 3.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "disk",
+    "node": 4,
+    "onset": 3427,
+    "detected": true,
+    "alarm_tick": 3445,
+    "delay_min": 9.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "crash",
+    "node": 24,
+    "onset": 3669,
+    "detected": true,
+    "alarm_tick": 3672,
+    "delay_min": 1.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "disk",
+    "node": 4,
+    "onset": 4236,
+    "detected": true,
+    "alarm_tick": 4247,
+    "delay_min": 5.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "memleak",
+    "node": 19,
+    "onset": 4807,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1000
+   },
+   {
+    "kind": "crash",
+    "node": 4,
+    "onset": 5243,
+    "detected": true,
+    "alarm_tick": 5246,
+    "delay_min": 1.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "cpu",
+    "node": 9,
+    "onset": 5388,
+    "detected": true,
+    "alarm_tick": 5427,
+    "delay_min": 19.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 10,
+    "onset": 5526,
+    "detected": true,
+    "alarm_tick": 5531,
+    "delay_min": 2.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 12,
+    "onset": 356,
+    "detected": true,
+    "alarm_tick": 359,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 24,
+    "onset": 370,
+    "detected": true,
+    "alarm_tick": 373,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "memleak",
+    "node": 21,
+    "onset": 594,
+    "detected": true,
+    "alarm_tick": 719,
+    "delay_min": 62.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "disk",
+    "node": 16,
+    "onset": 1156,
+    "detected": true,
+    "alarm_tick": 1198,
+    "delay_min": 21.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 19,
+    "onset": 1341,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 21,
+    "onset": 1404,
+    "detected": true,
+    "alarm_tick": 1407,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "disk",
+    "node": 27,
+    "onset": 1936,
+    "detected": true,
+    "alarm_tick": 1981,
+    "delay_min": 22.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 38,
+    "onset": 2055,
+    "detected": true,
+    "alarm_tick": 2058,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 4,
+    "onset": 2172,
+    "detected": true,
+    "alarm_tick": 2200,
+    "delay_min": 14.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "memleak",
+    "node": 22,
+    "onset": 2724,
+    "detected": true,
+    "alarm_tick": 3002,
+    "delay_min": 139.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 9,
+    "onset": 3854,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "memleak",
+    "node": 17,
+    "onset": 4260,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 11,
+    "onset": 4351,
+    "detected": true,
+    "alarm_tick": 4354,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "network",
+    "node": 33,
+    "onset": 5287,
+    "detected": true,
+    "alarm_tick": 5293,
+    "delay_min": 3.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 8,
+    "onset": 5303,
+    "detected": true,
+    "alarm_tick": 5318,
+    "delay_min": 7.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 24,
+    "onset": 5406,
+    "detected": true,
+    "alarm_tick": 5409,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 29,
+    "onset": 5606,
+    "detected": true,
+    "alarm_tick": 5630,
+    "delay_min": 12.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 5,
+    "onset": 246,
+    "detected": true,
+    "alarm_tick": 249,
+    "delay_min": 1.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "cpu",
+    "node": 5,
+    "onset": 873,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1002
+   },
+   {
+    "kind": "crash",
+    "node": 18,
+    "onset": 904,
+    "detected": true,
+    "alarm_tick": 907,
+    "delay_min": 1.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "cpu",
+    "node": 29,
+    "onset": 1231,
+    "detected": true,
+    "alarm_tick": 1265,
+    "delay_min": 17.0,
+    "cluster": 1002
+   },
+   {
+    "kind": "disk",
+    "node": 23,
+    "onset": 3512,
+    "detected": true,
+    "alarm_tick": 3545,
+    "delay_min": 16.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "memleak",
+    "node": 28,
+    "onset": 3752,
+    "detected": true,
+    "alarm_tick": 3959,
+    "delay_min": 103.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "disk",
+    "node": 14,
+    "onset": 4158,
+    "detected": true,
+    "alarm_tick": 4179,
+    "delay_min": 10.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "disk",
+    "node": 10,
+    "onset": 4834,
+    "detected": true,
+    "alarm_tick": 4884,
+    "delay_min": 25.0,
+    "cluster": 1002
+   },
+   {
+    "kind": "network",
+    "node": 4,
+    "onset": 5524,
+    "detected": true,
+    "alarm_tick": 5531,
+    "delay_min": 3.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "network",
+    "node": 19,
+    "onset": 155,
+    "detected": true,
+    "alarm_tick": 161,
+    "delay_min": 3.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 23,
+    "onset": 841,
+    "detected": true,
+    "alarm_tick": 864,
+    "delay_min": 11.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "disk",
+    "node": 22,
+    "onset": 1020,
+    "detected": true,
+    "alarm_tick": 1050,
+    "delay_min": 15.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 5,
+    "onset": 1153,
+    "detected": true,
+    "alarm_tick": 1171,
+    "delay_min": 9.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "memleak",
+    "node": 24,
+    "onset": 1812,
+    "detected": true,
+    "alarm_tick": 1956,
+    "delay_min": 72.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 7,
+    "onset": 2583,
+    "detected": true,
+    "alarm_tick": 2606,
+    "delay_min": 11.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "memleak",
+    "node": 34,
+    "onset": 3335,
+    "detected": true,
+    "alarm_tick": 3725,
+    "delay_min": 195.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "crash",
+    "node": 27,
+    "onset": 4382,
+    "detected": true,
+    "alarm_tick": 4385,
+    "delay_min": 1.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 14,
+    "onset": 4696,
+    "detected": true,
+    "alarm_tick": 4714,
+    "delay_min": 9.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "network",
+    "node": 21,
+    "onset": 5172,
+    "detected": true,
+    "alarm_tick": 5177,
+    "delay_min": 2.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "network",
+    "node": 5,
+    "onset": 387,
+    "detected": true,
+    "alarm_tick": 391,
+    "delay_min": 2.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "network",
+    "node": 27,
+    "onset": 568,
+    "detected": true,
+    "alarm_tick": 574,
+    "delay_min": 3.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "cpu",
+    "node": 34,
+    "onset": 1245,
+    "detected": true,
+    "alarm_tick": 1280,
+    "delay_min": 17.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "memleak",
+    "node": 33,
+    "onset": 1699,
+    "detected": true,
+    "alarm_tick": 1874,
+    "delay_min": 87.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 38,
+    "onset": 1705,
+    "detected": true,
+    "alarm_tick": 1728,
+    "delay_min": 11.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 10,
+    "onset": 1742,
+    "detected": true,
+    "alarm_tick": 1745,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 15,
+    "onset": 2721,
+    "detected": true,
+    "alarm_tick": 2732,
+    "delay_min": 5.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 13,
+    "onset": 2867,
+    "detected": true,
+    "alarm_tick": 2890,
+    "delay_min": 11.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 30,
+    "onset": 3047,
+    "detected": true,
+    "alarm_tick": 3067,
+    "delay_min": 10.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "network",
+    "node": 17,
+    "onset": 3164,
+    "detected": true,
+    "alarm_tick": 3170,
+    "delay_min": 3.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 11,
+    "onset": 3167,
+    "detected": true,
+    "alarm_tick": 3170,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 7,
+    "onset": 3649,
+    "detected": true,
+    "alarm_tick": 3652,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 36,
+    "onset": 3700,
+    "detected": true,
+    "alarm_tick": 3726,
+    "delay_min": 13.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "memleak",
+    "node": 30,
+    "onset": 4044,
+    "detected": true,
+    "alarm_tick": 4185,
+    "delay_min": 70.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 2,
+    "onset": 4237,
+    "detected": true,
+    "alarm_tick": 4240,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "cpu",
+    "node": 37,
+    "onset": 4619,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 15,
+    "onset": 4875,
+    "detected": true,
+    "alarm_tick": 4878,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 34,
+    "onset": 5095,
+    "detected": true,
+    "alarm_tick": 5127,
+    "delay_min": 16.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 22,
+    "onset": 539,
+    "detected": true,
+    "alarm_tick": 567,
+    "delay_min": 14.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 34,
+    "onset": 710,
+    "detected": true,
+    "alarm_tick": 828,
+    "delay_min": 59.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 30,
+    "onset": 1759,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 22,
+    "onset": 1782,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1005
+   },
+   {
+    "kind": "disk",
+    "node": 33,
+    "onset": 1818,
+    "detected": true,
+    "alarm_tick": 1846,
+    "delay_min": 14.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "network",
+    "node": 2,
+    "onset": 2835,
+    "detected": true,
+    "alarm_tick": 2840,
+    "delay_min": 2.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 8,
+    "onset": 2971,
+    "detected": true,
+    "alarm_tick": 3077,
+    "delay_min": 53.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 30,
+    "onset": 3707,
+    "detected": true,
+    "alarm_tick": 3861,
+    "delay_min": 77.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "disk",
+    "node": 6,
+    "onset": 3903,
+    "detected": true,
+    "alarm_tick": 3929,
+    "delay_min": 13.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 4,
+    "onset": 4357,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 23,
+    "onset": 4427,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1005
+   },
+   {
+    "kind": "crash",
+    "node": 7,
+    "onset": 4438,
+    "detected": true,
+    "alarm_tick": 4441,
+    "delay_min": 1.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "network",
+    "node": 25,
+    "onset": 4577,
+    "detected": true,
+    "alarm_tick": 4586,
+    "delay_min": 4.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 35,
+    "onset": 4640,
+    "detected": true,
+    "alarm_tick": 4925,
+    "delay_min": 142.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 10,
+    "onset": 4789,
+    "detected": true,
+    "alarm_tick": 4868,
+    "delay_min": 39.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "crash",
+    "node": 5,
+    "onset": 342,
+    "detected": true,
+    "alarm_tick": 345,
+    "delay_min": 1.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 4,
+    "onset": 723,
+    "detected": true,
+    "alarm_tick": 737,
+    "delay_min": 7.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 31,
+    "onset": 848,
+    "detected": true,
+    "alarm_tick": 851,
+    "delay_min": 1.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "memleak",
+    "node": 32,
+    "onset": 1422,
+    "detected": true,
+    "alarm_tick": 1615,
+    "delay_min": 96.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 34,
+    "onset": 1444,
+    "detected": true,
+    "alarm_tick": 1450,
+    "delay_min": 3.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 17,
+    "onset": 2092,
+    "detected": true,
+    "alarm_tick": 2115,
+    "delay_min": 11.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 18,
+    "onset": 2155,
+    "detected": true,
+    "alarm_tick": 2172,
+    "delay_min": 8.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "cpu",
+    "node": 29,
+    "onset": 2335,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 16,
+    "onset": 2598,
+    "detected": true,
+    "alarm_tick": 2613,
+    "delay_min": 7.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 33,
+    "onset": 3283,
+    "detected": true,
+    "alarm_tick": 3289,
+    "delay_min": 3.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "memleak",
+    "node": 6,
+    "onset": 3939,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 1,
+    "onset": 3948,
+    "detected": true,
+    "alarm_tick": 3952,
+    "delay_min": 2.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "cpu",
+    "node": 37,
+    "onset": 4491,
+    "detected": true,
+    "alarm_tick": 4518,
+    "delay_min": 13.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "crash",
+    "node": 10,
+    "onset": 4882,
+    "detected": true,
+    "alarm_tick": 4885,
+    "delay_min": 1.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "crash",
+    "node": 28,
+    "onset": 141,
+    "detected": true,
+    "alarm_tick": 144,
+    "delay_min": 1.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 3,
+    "onset": 384,
+    "detected": true,
+    "alarm_tick": 418,
+    "delay_min": 17.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 10,
+    "onset": 652,
+    "detected": true,
+    "alarm_tick": 684,
+    "delay_min": 16.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "memleak",
+    "node": 1,
+    "onset": 998,
+    "detected": true,
+    "alarm_tick": 1138,
+    "delay_min": 70.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 21,
+    "onset": 1489,
+    "detected": true,
+    "alarm_tick": 1518,
+    "delay_min": 14.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "memleak",
+    "node": 4,
+    "onset": 2162,
+    "detected": true,
+    "alarm_tick": 2404,
+    "delay_min": 121.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "memleak",
+    "node": 3,
+    "onset": 3274,
+    "detected": true,
+    "alarm_tick": 3396,
+    "delay_min": 61.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 36,
+    "onset": 3841,
+    "detected": true,
+    "alarm_tick": 3891,
+    "delay_min": 25.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "disk",
+    "node": 12,
+    "onset": 4167,
+    "detected": true,
+    "alarm_tick": 4216,
+    "delay_min": 24.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "disk",
+    "node": 2,
+    "onset": 4206,
+    "detected": true,
+    "alarm_tick": 4221,
+    "delay_min": 7.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "network",
+    "node": 10,
+    "onset": 4731,
+    "detected": true,
+    "alarm_tick": 4735,
+    "delay_min": 2.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "disk",
+    "node": 13,
+    "onset": 4791,
+    "detected": true,
+    "alarm_tick": 4811,
+    "delay_min": 10.0,
+    "cluster": 1007
+   }
+  ],
+  "hybrid(peer-mad+window-ae)": [
+   {
+    "kind": "cpu",
+    "node": 37,
+    "onset": 427,
+    "detected": true,
+    "alarm_tick": 519,
+    "delay_min": 46.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 12,
+    "onset": 837,
+    "detected": true,
+    "alarm_tick": 845,
+    "delay_min": 4.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "crash",
+    "node": 28,
+    "onset": 1605,
+    "detected": true,
+    "alarm_tick": 1608,
+    "delay_min": 1.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "cpu",
+    "node": 26,
+    "onset": 1661,
+    "detected": true,
+    "alarm_tick": 1681,
+    "delay_min": 10.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 3,
+    "onset": 1806,
+    "detected": true,
+    "alarm_tick": 1813,
+    "delay_min": 3.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "disk",
+    "node": 15,
+    "onset": 2379,
+    "detected": true,
+    "alarm_tick": 2408,
+    "delay_min": 14.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 36,
+    "onset": 3278,
+    "detected": true,
+    "alarm_tick": 3284,
+    "delay_min": 3.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "disk",
+    "node": 4,
+    "onset": 3427,
+    "detected": true,
+    "alarm_tick": 3446,
+    "delay_min": 9.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "crash",
+    "node": 24,
+    "onset": 3669,
+    "detected": true,
+    "alarm_tick": 3672,
+    "delay_min": 1.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "disk",
+    "node": 4,
+    "onset": 4236,
+    "detected": true,
+    "alarm_tick": 4256,
+    "delay_min": 10.0,
+    "cluster": 1000
+   },
+   {
+    "kind": "memleak",
+    "node": 19,
+    "onset": 4807,
+    "detected": true,
+    "alarm_tick": 5112,
+    "delay_min": 152.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "crash",
+    "node": 4,
+    "onset": 5243,
+    "detected": true,
+    "alarm_tick": 5246,
+    "delay_min": 1.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "cpu",
+    "node": 9,
+    "onset": 5388,
+    "detected": true,
+    "alarm_tick": 5409,
+    "delay_min": 10.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 10,
+    "onset": 5526,
+    "detected": true,
+    "alarm_tick": 5531,
+    "delay_min": 2.5,
+    "cluster": 1000
+   },
+   {
+    "kind": "network",
+    "node": 12,
+    "onset": 356,
+    "detected": true,
+    "alarm_tick": 359,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 24,
+    "onset": 370,
+    "detected": true,
+    "alarm_tick": 373,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "memleak",
+    "node": 21,
+    "onset": 594,
+    "detected": true,
+    "alarm_tick": 717,
+    "delay_min": 61.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "disk",
+    "node": 16,
+    "onset": 1156,
+    "detected": true,
+    "alarm_tick": 1198,
+    "delay_min": 21.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 19,
+    "onset": 1341,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 21,
+    "onset": 1404,
+    "detected": true,
+    "alarm_tick": 1407,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "disk",
+    "node": 27,
+    "onset": 1936,
+    "detected": true,
+    "alarm_tick": 1981,
+    "delay_min": 22.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 38,
+    "onset": 2055,
+    "detected": true,
+    "alarm_tick": 2058,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 4,
+    "onset": 2172,
+    "detected": true,
+    "alarm_tick": 2194,
+    "delay_min": 11.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "memleak",
+    "node": 22,
+    "onset": 2724,
+    "detected": true,
+    "alarm_tick": 2947,
+    "delay_min": 111.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 9,
+    "onset": 3854,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1001
+   },
+   {
+    "kind": "memleak",
+    "node": 17,
+    "onset": 4260,
+    "detected": true,
+    "alarm_tick": 4547,
+    "delay_min": 143.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 11,
+    "onset": 4351,
+    "detected": true,
+    "alarm_tick": 4354,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "network",
+    "node": 33,
+    "onset": 5287,
+    "detected": true,
+    "alarm_tick": 5293,
+    "delay_min": 3.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 8,
+    "onset": 5303,
+    "detected": true,
+    "alarm_tick": 5319,
+    "delay_min": 8.0,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 24,
+    "onset": 5406,
+    "detected": true,
+    "alarm_tick": 5409,
+    "delay_min": 1.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "cpu",
+    "node": 29,
+    "onset": 5606,
+    "detected": true,
+    "alarm_tick": 5627,
+    "delay_min": 10.5,
+    "cluster": 1001
+   },
+   {
+    "kind": "crash",
+    "node": 5,
+    "onset": 246,
+    "detected": true,
+    "alarm_tick": 249,
+    "delay_min": 1.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "cpu",
+    "node": 5,
+    "onset": 873,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1002
+   },
+   {
+    "kind": "crash",
+    "node": 18,
+    "onset": 904,
+    "detected": true,
+    "alarm_tick": 907,
+    "delay_min": 1.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "cpu",
+    "node": 29,
+    "onset": 1231,
+    "detected": true,
+    "alarm_tick": 1244,
+    "delay_min": 6.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "disk",
+    "node": 23,
+    "onset": 3512,
+    "detected": true,
+    "alarm_tick": 3546,
+    "delay_min": 17.0,
+    "cluster": 1002
+   },
+   {
+    "kind": "memleak",
+    "node": 28,
+    "onset": 3752,
+    "detected": true,
+    "alarm_tick": 3932,
+    "delay_min": 90.0,
+    "cluster": 1002
+   },
+   {
+    "kind": "disk",
+    "node": 14,
+    "onset": 4158,
+    "detected": true,
+    "alarm_tick": 4179,
+    "delay_min": 10.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "disk",
+    "node": 10,
+    "onset": 4834,
+    "detected": true,
+    "alarm_tick": 4884,
+    "delay_min": 25.0,
+    "cluster": 1002
+   },
+   {
+    "kind": "network",
+    "node": 4,
+    "onset": 5524,
+    "detected": true,
+    "alarm_tick": 5531,
+    "delay_min": 3.5,
+    "cluster": 1002
+   },
+   {
+    "kind": "network",
+    "node": 19,
+    "onset": 155,
+    "detected": true,
+    "alarm_tick": 162,
+    "delay_min": 3.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 23,
+    "onset": 841,
+    "detected": true,
+    "alarm_tick": 868,
+    "delay_min": 13.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "disk",
+    "node": 22,
+    "onset": 1020,
+    "detected": true,
+    "alarm_tick": 1052,
+    "delay_min": 16.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 5,
+    "onset": 1153,
+    "detected": true,
+    "alarm_tick": 1162,
+    "delay_min": 4.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "memleak",
+    "node": 24,
+    "onset": 1812,
+    "detected": true,
+    "alarm_tick": 1957,
+    "delay_min": 72.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 7,
+    "onset": 2583,
+    "detected": true,
+    "alarm_tick": 2607,
+    "delay_min": 12.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "memleak",
+    "node": 34,
+    "onset": 3335,
+    "detected": true,
+    "alarm_tick": 3591,
+    "delay_min": 128.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "crash",
+    "node": 27,
+    "onset": 4382,
+    "detected": true,
+    "alarm_tick": 4385,
+    "delay_min": 1.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "cpu",
+    "node": 14,
+    "onset": 4696,
+    "detected": true,
+    "alarm_tick": 4712,
+    "delay_min": 8.0,
+    "cluster": 1003
+   },
+   {
+    "kind": "network",
+    "node": 21,
+    "onset": 5172,
+    "detected": true,
+    "alarm_tick": 5177,
+    "delay_min": 2.5,
+    "cluster": 1003
+   },
+   {
+    "kind": "network",
+    "node": 5,
+    "onset": 387,
+    "detected": true,
+    "alarm_tick": 391,
+    "delay_min": 2.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "network",
+    "node": 27,
+    "onset": 568,
+    "detected": true,
+    "alarm_tick": 574,
+    "delay_min": 3.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "cpu",
+    "node": 34,
+    "onset": 1245,
+    "detected": true,
+    "alarm_tick": 1273,
+    "delay_min": 14.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "memleak",
+    "node": 33,
+    "onset": 1699,
+    "detected": true,
+    "alarm_tick": 1796,
+    "delay_min": 48.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 38,
+    "onset": 1705,
+    "detected": true,
+    "alarm_tick": 1728,
+    "delay_min": 11.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 10,
+    "onset": 1742,
+    "detected": true,
+    "alarm_tick": 1745,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 15,
+    "onset": 2721,
+    "detected": true,
+    "alarm_tick": 2732,
+    "delay_min": 5.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 13,
+    "onset": 2867,
+    "detected": true,
+    "alarm_tick": 2890,
+    "delay_min": 11.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 30,
+    "onset": 3047,
+    "detected": true,
+    "alarm_tick": 3067,
+    "delay_min": 10.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "network",
+    "node": 17,
+    "onset": 3164,
+    "detected": true,
+    "alarm_tick": 3170,
+    "delay_min": 3.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 11,
+    "onset": 3167,
+    "detected": true,
+    "alarm_tick": 3170,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 7,
+    "onset": 3649,
+    "detected": true,
+    "alarm_tick": 3652,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 36,
+    "onset": 3700,
+    "detected": true,
+    "alarm_tick": 3729,
+    "delay_min": 14.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "memleak",
+    "node": 30,
+    "onset": 4044,
+    "detected": true,
+    "alarm_tick": 4186,
+    "delay_min": 71.0,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 2,
+    "onset": 4237,
+    "detected": true,
+    "alarm_tick": 4240,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "cpu",
+    "node": 37,
+    "onset": 4619,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1004
+   },
+   {
+    "kind": "crash",
+    "node": 15,
+    "onset": 4875,
+    "detected": true,
+    "alarm_tick": 4878,
+    "delay_min": 1.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 34,
+    "onset": 5095,
+    "detected": true,
+    "alarm_tick": 5128,
+    "delay_min": 16.5,
+    "cluster": 1004
+   },
+   {
+    "kind": "disk",
+    "node": 22,
+    "onset": 539,
+    "detected": true,
+    "alarm_tick": 567,
+    "delay_min": 14.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 34,
+    "onset": 710,
+    "detected": true,
+    "alarm_tick": 789,
+    "delay_min": 39.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 30,
+    "onset": 1759,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 22,
+    "onset": 1782,
+    "detected": true,
+    "alarm_tick": 1816,
+    "delay_min": 17.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "disk",
+    "node": 33,
+    "onset": 1818,
+    "detected": true,
+    "alarm_tick": 1847,
+    "delay_min": 14.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "network",
+    "node": 2,
+    "onset": 2835,
+    "detected": true,
+    "alarm_tick": 2840,
+    "delay_min": 2.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 8,
+    "onset": 2971,
+    "detected": true,
+    "alarm_tick": 3076,
+    "delay_min": 52.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 30,
+    "onset": 3707,
+    "detected": true,
+    "alarm_tick": 3802,
+    "delay_min": 47.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "disk",
+    "node": 6,
+    "onset": 3903,
+    "detected": true,
+    "alarm_tick": 3929,
+    "delay_min": 13.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 4,
+    "onset": 4357,
+    "detected": true,
+    "alarm_tick": 4396,
+    "delay_min": 19.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 23,
+    "onset": 4427,
+    "detected": true,
+    "alarm_tick": 4614,
+    "delay_min": 93.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "crash",
+    "node": 7,
+    "onset": 4438,
+    "detected": true,
+    "alarm_tick": 4441,
+    "delay_min": 1.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "network",
+    "node": 25,
+    "onset": 4577,
+    "detected": true,
+    "alarm_tick": 4586,
+    "delay_min": 4.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "memleak",
+    "node": 35,
+    "onset": 4640,
+    "detected": true,
+    "alarm_tick": 4845,
+    "delay_min": 102.5,
+    "cluster": 1005
+   },
+   {
+    "kind": "cpu",
+    "node": 10,
+    "onset": 4789,
+    "detected": true,
+    "alarm_tick": 4813,
+    "delay_min": 12.0,
+    "cluster": 1005
+   },
+   {
+    "kind": "crash",
+    "node": 5,
+    "onset": 342,
+    "detected": true,
+    "alarm_tick": 345,
+    "delay_min": 1.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 4,
+    "onset": 723,
+    "detected": true,
+    "alarm_tick": 737,
+    "delay_min": 7.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 31,
+    "onset": 848,
+    "detected": true,
+    "alarm_tick": 851,
+    "delay_min": 1.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "memleak",
+    "node": 32,
+    "onset": 1422,
+    "detected": true,
+    "alarm_tick": 1556,
+    "delay_min": 67.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 34,
+    "onset": 1444,
+    "detected": true,
+    "alarm_tick": 1450,
+    "delay_min": 3.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 17,
+    "onset": 2092,
+    "detected": true,
+    "alarm_tick": 2117,
+    "delay_min": 12.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 18,
+    "onset": 2155,
+    "detected": true,
+    "alarm_tick": 2173,
+    "delay_min": 9.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "cpu",
+    "node": 29,
+    "onset": 2335,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1006
+   },
+   {
+    "kind": "disk",
+    "node": 16,
+    "onset": 2598,
+    "detected": true,
+    "alarm_tick": 2613,
+    "delay_min": 7.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 33,
+    "onset": 3283,
+    "detected": true,
+    "alarm_tick": 3289,
+    "delay_min": 3.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "memleak",
+    "node": 6,
+    "onset": 3939,
+    "detected": true,
+    "alarm_tick": 4238,
+    "delay_min": 149.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "network",
+    "node": 1,
+    "onset": 3948,
+    "detected": true,
+    "alarm_tick": 3952,
+    "delay_min": 2.0,
+    "cluster": 1006
+   },
+   {
+    "kind": "cpu",
+    "node": 37,
+    "onset": 4491,
+    "detected": true,
+    "alarm_tick": 4510,
+    "delay_min": 9.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "crash",
+    "node": 10,
+    "onset": 4882,
+    "detected": true,
+    "alarm_tick": 4885,
+    "delay_min": 1.5,
+    "cluster": 1006
+   },
+   {
+    "kind": "crash",
+    "node": 28,
+    "onset": 141,
+    "detected": true,
+    "alarm_tick": 144,
+    "delay_min": 1.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 3,
+    "onset": 384,
+    "detected": true,
+    "alarm_tick": 421,
+    "delay_min": 18.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 10,
+    "onset": 652,
+    "detected": true,
+    "alarm_tick": 684,
+    "delay_min": 16.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "memleak",
+    "node": 1,
+    "onset": 998,
+    "detected": true,
+    "alarm_tick": 1081,
+    "delay_min": 41.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 21,
+    "onset": 1489,
+    "detected": true,
+    "alarm_tick": 1510,
+    "delay_min": 10.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "memleak",
+    "node": 4,
+    "onset": 2162,
+    "detected": true,
+    "alarm_tick": 2312,
+    "delay_min": 75.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "memleak",
+    "node": 3,
+    "onset": 3274,
+    "detected": true,
+    "alarm_tick": 3377,
+    "delay_min": 51.5,
+    "cluster": 1007
+   },
+   {
+    "kind": "cpu",
+    "node": 36,
+    "onset": 3841,
+    "detected": false,
+    "alarm_tick": null,
+    "delay_min": null,
+    "cluster": 1007
+   },
+   {
+    "kind": "disk",
+    "node": 12,
+    "onset": 4167,
+    "detected": true,
+    "alarm_tick": 4217,
+    "delay_min": 25.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "disk",
+    "node": 2,
+    "onset": 4206,
+    "detected": true,
+    "alarm_tick": 4222,
+    "delay_min": 8.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "network",
+    "node": 10,
+    "onset": 4731,
+    "detected": true,
+    "alarm_tick": 4735,
+    "delay_min": 2.0,
+    "cluster": 1007
+   },
+   {
+    "kind": "disk",
+    "node": 13,
+    "onset": 4791,
+    "detected": true,
+    "alarm_tick": 4813,
+    "delay_min": 11.0,
+    "cluster": 1007
+   }
+  ]
+ },
+ "wall_time_s": 393.1915965080261
+}
