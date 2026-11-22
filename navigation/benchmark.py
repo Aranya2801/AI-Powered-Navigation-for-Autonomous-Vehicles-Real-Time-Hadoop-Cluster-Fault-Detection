@@ -113,6 +113,8 @@ def main():
                     help="use e.g. 300000 for a validation split while tuning")
     ap.add_argument("--out", default="runs/benchmark_results.json")
     args = ap.parse_args()
+    import torch
+    torch.set_num_threads(1)   # batch-of-one inference; extra threads just spin
 
     env = NavEnv(args.difficulty, noise=SensorNoise().scaled(args.noise_scale))
     agents = build_agents(args.ppo_checkpoint)
