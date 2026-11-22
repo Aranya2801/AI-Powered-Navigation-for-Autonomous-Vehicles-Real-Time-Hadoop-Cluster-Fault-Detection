@@ -1,0 +1,51 @@
+<svg width="860" height="430" viewBox="0 0 860 430" xmlns="http://www.w3.org/2000/svg" role="img" font-family="Helvetica, Arial, sans-serif">
+<title>Project architecture</title>
+<desc>Module 1: simulated LiDAR, GPS and IMU; an EKF fuses GPS and IMU; the PPO policy sees LiDAR plus the EKF estimate, the classical planners see the true map plus the EKF pose; both drive the navigation environment, scored by the benchmark. Module 2: vehicle telemetry is ingested by a Hadoop cluster; per-node metrics are replayed tick by tick into online detectors (static thresholds, EWMA z-score, peer MAD, window autoencoder, hybrid), followed by an alarm policy and a fault-type classifier.</desc>
+<defs>
+<marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#52514e" stroke-width="1.5"/></marker>
+<style>
+.box{fill:#fcfcfb;stroke:#52514e;stroke-width:1}
+.hl{fill:#eaf2fc;stroke:#2a78d6;stroke-width:1.2}
+.t{font-size:13px;fill:#0b0b0b;font-weight:600}
+.s{font-size:11px;fill:#52514e}
+.h{font-size:14px;fill:#0b0b0b;font-weight:700}
+.l{stroke:#52514e;stroke-width:1.2;fill:none;marker-end:url(#a)}
+.d{stroke:#52514e;stroke-width:1.2;fill:none;stroke-dasharray:4 3;marker-end:url(#a)}
+</style>
+</defs>
+<rect x="8" y="8" width="844" height="196" rx="10" fill="none" stroke="#c3c2b7"/>
+<text x="22" y="30" class="h">Module 1 - navigation under sensor noise</text>
+
+<rect x="22" y="46" width="130" height="40" rx="6" class="box"/><text x="87" y="64" text-anchor="middle" class="t">LiDAR</text><text x="87" y="79" text-anchor="middle" class="s">36 beams, dropout</text>
+<rect x="22" y="96" width="130" height="40" rx="6" class="box"/><text x="87" y="114" text-anchor="middle" class="t">GPS</text><text x="87" y="129" text-anchor="middle" class="s">bias drift, bad fixes</text>
+<rect x="22" y="146" width="130" height="40" rx="6" class="box"/><text x="87" y="164" text-anchor="middle" class="t">IMU</text><text x="87" y="179" text-anchor="middle" class="s">heading + speed</text>
+
+<rect x="196" y="110" width="120" height="54" rx="6" class="box"/><text x="256" y="132" text-anchor="middle" class="t">EKF</text><text x="256" y="148" text-anchor="middle" class="s">[x, y, theta, v]</text>
+<path d="M152 116 H196" class="l"/><path d="M152 166 H174 V150 H196" class="l"/>
+
+<rect x="360" y="46" width="150" height="54" rx="6" class="hl"/><text x="435" y="68" text-anchor="middle" class="t">PPO policy</text><text x="435" y="84" text-anchor="middle" class="s">LiDAR + EKF estimate only</text>
+<rect x="360" y="128" width="150" height="54" rx="6" class="box"/><text x="435" y="150" text-anchor="middle" class="t">A* / RRT + pursuit</text><text x="435" y="166" text-anchor="middle" class="s">true map + EKF pose</text>
+<path d="M152 66 H360" class="l"/><path d="M316 130 H338 V80 H360" class="l"/><path d="M316 150 H360" class="l"/>
+
+<rect x="556" y="86" width="130" height="54" rx="6" class="box"/><text x="621" y="108" text-anchor="middle" class="t">NavEnv</text><text x="621" y="124" text-anchor="middle" class="s">bicycle model, 18 obst.</text>
+<path d="M510 73 H533 V105 H556" class="l"/><path d="M510 155 H533 V122 H556" class="l"/>
+<rect x="720" y="86" width="118" height="54" rx="6" class="box"/><text x="779" y="108" text-anchor="middle" class="t">Benchmark</text><text x="779" y="124" text-anchor="middle" class="s">paired held-out seeds</text>
+<path d="M686 113 H720" class="l"/>
+
+<rect x="8" y="222" width="844" height="198" rx="10" fill="none" stroke="#c3c2b7"/>
+<text x="22" y="244" class="h">Module 2 - real-time Hadoop cluster fault detection</text>
+<path d="M621 140 V200 H87 V262" class="d"/><text x="300" y="214" class="s">fleet telemetry is the cluster's ingest workload</text>
+
+<rect x="22" y="262" width="130" height="62" rx="6" class="box"/><text x="87" y="284" text-anchor="middle" class="t">Cluster sim</text><text x="87" y="300" text-anchor="middle" class="s">40 nodes, 14 metrics</text><text x="87" y="314" text-anchor="middle" class="s">5 fault types</text>
+<rect x="196" y="262" width="130" height="62" rx="6" class="box"/><text x="261" y="284" text-anchor="middle" class="t">Tick replay</text><text x="261" y="300" text-anchor="middle" class="s">one 30 s snapshot</text><text x="261" y="314" text-anchor="middle" class="s">at a time</text>
+<path d="M152 293 H196" class="l"/>
+
+<rect x="370" y="256" width="170" height="150" rx="6" class="hl"/><text x="455" y="278" text-anchor="middle" class="t">Online detectors</text>
+<text x="455" y="300" text-anchor="middle" class="s">static thresholds</text><text x="455" y="318" text-anchor="middle" class="s">EWMA z-score</text><text x="455" y="336" text-anchor="middle" class="s">peer MAD</text><text x="455" y="354" text-anchor="middle" class="s">window autoencoder</text><text x="455" y="372" text-anchor="middle" class="s">hybrid (peer + AE)</text><text x="455" y="392" text-anchor="middle" class="s">+ heartbeat liveness</text>
+<path d="M326 293 H370" class="l"/>
+
+<rect x="584" y="262" width="110" height="62" rx="6" class="box"/><text x="639" y="284" text-anchor="middle" class="t">Alarm policy</text><text x="639" y="300" text-anchor="middle" class="s">k-of-n debounce</text><text x="639" y="314" text-anchor="middle" class="s">FA-budget threshold</text>
+<path d="M540 293 H584" class="l"/>
+<rect x="728" y="262" width="110" height="62" rx="6" class="box"/><text x="783" y="284" text-anchor="middle" class="t">Diagnosis</text><text x="783" y="300" text-anchor="middle" class="s">gradient boosting</text><text x="783" y="314" text-anchor="middle" class="s">fault type</text>
+<path d="M694 293 H728" class="l"/>
+</svg>
