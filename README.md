@@ -1,166 +1,183 @@
-# Fleet Navigation & Sensor Fusion: RL vs. Classical Planning Benchmark
+# Autonomous Fleet Navigation + Real-Time Hadoop Cluster Fault Detection
 
-A from-scratch research benchmark comparing a learned navigation policy (PPO, implemented
-in raw PyTorch — no RL library dependency) against classical path planners (A*, RRT,
-replanning A*) on a continuous-control autonomous navigation task, where the learned
-policy operates on **noisy, fused sensor estimates** (simulated LiDAR + GPS + IMU via an
-Extended Kalman Filter) rather than privileged ground-truth state.
+[![tests](https://github.com/Aranya2801/AI-Powered-Navigation-for-Autonomous-Vehicles-Real-Time-Hadoop-Cluster-Fault-Detection/actions/workflows/tests.yml/badge.svg)](https://github.com/Aranya2801/AI-Powered-Navigation-for-Autonomous-Vehicles-Real-Time-Hadoop-Cluster-Fault-Detection/actions/workflows/tests.yml)
 
-This repository documents not just the final results but the actual debugging process
-that got there — five real, verified bugs (a PPO log-prob mismatch, an EKF angle-wraparound
-bug, an unlearnable feature encoding, and two distinct reward-hacking local optima) are
-each diagnosed with evidence and fixed in [`docs/module1_results.md`](docs/module1_results.md).
-Nothing here is a placeholder; every number in this README comes from a real training run
-and a real held-out evaluation.
+This project covers two parts of running an autonomous vehicle fleet:
 
-## Status
+1. **Navigation under sensor noise.** I trained a PPO policy that drives through
+   static and moving obstacles using only simulated LiDAR and a GPS/IMU estimate fused
+   by an Extended Kalman Filter. It never sees the true pose or the true map. I compared
+   it with A\*, A\* with replanning and RRT. Those planners get the true obstacle map.
+2. **Real-time fault detection for the Hadoop cluster that ingests the fleet's
+   telemetry.** Per-node metrics stream in every 30 s. Online detectors raise alarms,
+   and a classifier names the fault type: failing disk, JVM memory leak, network
+   problem, runaway CPU or node crash.
 
-| Module | Status | Description |
-|---|---|---|
-| **1. Fleet navigation + sensor fusion** | ✅ Complete | PPO navigation policy, EKF sensor fusion, A*/RRT baselines, full benchmark |
-| **2. Distributed telemetry + cluster fault detection** | 🔜 Planned | Fleet telemetry pipeline feeding a cluster fault-detection model trained on a public trace dataset |
-| **3. Integration + MLOps polish** | 🔜 Planned | Shared dashboard, experiment tracking, final repo polish |
+Everything is plain Python, NumPy and PyTorch. PPO, the EKF and the planners are
+written from scratch. All numbers below come from the JSON files in `runs/`, and
+`scripts/` contains the commands that produce them.
 
-This is being built incrementally, with each module held to a "must actually run and
-produce real numbers" bar before moving to the next — see [Project Philosophy](#project-philosophy)
-below.
+![Architecture](docs/architecture.svg)
 
-## Architecture
+## Results
 
-![Architecture diagram](architecture.svg)
+### Navigation: 200 held-out episodes, full difficulty (14 static + 4 moving obstacles)
 
-## Headline Results (Module 1)
+| Method | Success | Collision (static / moving) | Timeout | Path efficiency | ms / step |
+|---|---|---|---|---|---|
+| **PPO (ours)**, sensors only | **81.0%** ± 4.1% (3 seeds) | 18.0% (10.5% / 7.0%) | 1.0% | 1.14 | 0.36 |
+| A\*, true map | 68.5% [62%, 75%] | 31.5% (6.0% / 25.0%) | 0.0% | 1.07 | 0.05 |
+| A\* + replanning every 2 s, true map | 82.0% [76%, 87%] | 18.0% (1.5% / 16.5%) | 0.0% | 1.08 | 0.54 |
+| RRT, true map | 68.0% [61%, 74%] | 32.0% (7.0% / 24.0%) | 0.0% | 1.15 | 0.05 |
 
-Trained PPO policy vs. classical planning baselines, evaluated on **50 held-out seeds**
-never used during training, at full task difficulty (14 static + 4 dynamic obstacles):
+Brackets are 95% Wilson intervals. Every method runs on the same 200 seeds with the same
+sensor-noise sequence, so the comparisons are paired. With McNemar's test, two
+of the three PPO seeds beat one-shot A\* and RRT at p < 0.01. The third seed is ahead
+too, but only at p ≈ 0.07–0.08. No seed differs significantly from A\* with replanning
+(p ≥ 0.22), so the two are effectively tied at standard noise.
 
-| Method | Success Rate | Collision Rate | Timeout Rate | Path Efficiency* |
+**The main finding comes from degrading the sensors.** In the stress test below, every
+noise magnitude (GPS, IMU, LiDAR) is multiplied by k. A\* with replanning drops from 82% to
+51% at 4x noise. The PPO policy stays at 78–82%:
+
+| Method | 0.5x | 1x | 2x | 3x | 4x |
+|---|---|---|---|---|---|
+| PPO (mean of 3 seeds) | 81% | 81% | 82% | 80% | 78% |
+| A\* + replanning | 81% | 82% | 78% | 64% | 51% |
+| A\* | 71% | 68% | 60% | 44% | 38% |
+| RRT | 69% | 68% | 58% | 54% | 48% |
+
+![noise robustness](docs/figures/noise_robustness.png)
+
+Here is why. The planners turn a map path into steering commands through the
+*absolute* pose estimate, so GPS error moves the whole plan relative to the real
+obstacles. The policy steers mostly from body-frame LiDAR and the relative goal bearing,
+and those barely depend on absolute position. Most of the planners' extra failures are
+static-obstacle hits: at 4x noise the replanning A\* static-collision rate goes from
+1.5% to 38%.
+
+### Cluster fault detection: 8 held-out simulated clusters, 40 nodes x 2 days, 109 faults
+
+Each detector's threshold is calibrated on separate validation clusters to stay within
+0.25 false alarms per node-day, then frozen.
+
+| Detector | Recall | False alarms / node-day | Median delay | ms / tick (40 nodes) |
 |---|---|---|---|---|
-| **PPO (learned, noisy sensor obs)** | **80%** | 20% | **0%** | 1.07 |
-| A* (no replanning) | 84% | 8% | 8% | 1.00 |
-| A* (with periodic replanning) | 92% | 8% | 0% | 1.00 |
-| RRT | 82% | 14% | 4% | 1.11 |
+| Static thresholds (Ambari-style) | 68.8% | 4.27 | 14.0 min | 0.02 |
+| EWMA z-score (own history) | 82.6% | 0.29 | 7.8 min | 0.05 |
+| **Peer MAD** (vs. other nodes) | **96.3%** | 0.24 | 12.0 min | 0.42 |
+| Window autoencoder | 89.0% | **0.16** | 9.0 min | 0.85 |
+| Hybrid (peer + AE) | 93.6% | 0.25 | 10.0 min | 1.33 |
 
-*Path efficiency = actual path length / straight-line distance (1.00 = optimal).
+Fault-type diagnosis on the faults caught by peer MAD is 93% accurate (98/105). The only
+mistakes are CPU faults read as memory leaks. 132 of peer MAD's 153 false alarms land on
+benign *data-skew hot spots*, where one node legitimately gets more work. The
+autoencoder, which also models each node's own history, raised none on hot spots.
+[docs/results.md](docs/results.md#module-2-cluster-fault-detection) covers this in more
+detail.
 
-**The headline finding:** PPO is competitive with classical planners despite a strictly
-harder information environment — the classical planners are given the true obstacle
-field directly (standard for planning baselines), while PPO only ever observes a noisy
-EKF-fused estimate from simulated LiDAR/GPS/IMU. PPO also never times out, while the
-search-based planners occasionally fail to find a path within budget.
+![operating curves](docs/figures/cluster_operating_curves.png)
 
-See [`docs/module1_results.md`](module1_results.md) for the medium-difficulty
-table, training curves, full methodology, and the development log of bugs found and fixed.
-
-![Training curves](training_curves.png)
-
-## Repository Structure
+## Repository layout
 
 ```
-.
-├── .github/workflows/tests.yml # CI: runs the real test suite on push/PR
-├── simulation/
-│   ├── env_core.py          # Continuous-dynamics nav environment, curriculum scaling
-│   └── sensors.py           # Simulated LiDAR/GPS/IMU + Extended Kalman Filter fusion
-├── navigation/
-│   ├── classical_planners.py  # A*, RRT, pure-pursuit controller, replanning A*
-│   ├── policy_ppo.py           # PPO (actor-critic, GAE, clipped objective) from scratch
-│   ├── observation.py          # Builds the policy's observation vector from fused state
-│   ├── behavior_cloning.py     # Heuristic-demonstration warm start for PPO
-│   ├── train_ppo.py            # Curriculum-scheduled PPO training loop (resumable)
-│   └── benchmark.py            # Held-out evaluation harness: PPO vs. A*/RRT
-├── tests/                       # 13 real unit/regression tests (all passing)
-├── runs/                        # Training history, checkpoints, benchmark JSON, plots
-├── docs/
-│   ├── module1_results.md      # Full methodology, results tables, bug-fix development log
-│   └── architecture.svg        # Data-flow diagram (sensors -> fusion -> policy/planner -> env)
-├── requirements.txt
-├── CHANGELOG.md
-├── CONTRIBUTING.md
-├── LICENSE
-└── README.md
+simulation/
+  env_core.py            continuous 2D world, bicycle model, curriculum, reward
+  sensors.py             LiDAR ray casting, GPS (bias drift, bad fixes), IMU, EKF
+navigation/
+  observation.py         policy input, built from sensor data only
+  policy_ppo.py          PPO: actor-critic, GAE, clipping, obs/reward normalisation
+  behavior_cloning.py    optional warm start from an A* teacher (DART noise)
+  train_ppo.py           curriculum training loop, resumable
+  classical_planners.py  grid A*, RRT, pure pursuit, replanning
+  benchmark.py           paired held-out evaluation, Wilson CIs, McNemar tests
+cluster/
+  simulator.py           Hadoop cluster telemetry + fault injection
+  detectors.py           static / EWMA / peer MAD / window AE / hybrid, alarm policy
+  diagnosis.py           fault-type classifier (gradient boosting)
+  evaluate.py            calibration on val, event-level metrics on test
+scripts/
+  train_all.sh           every navigation training run used in the docs
+  run_benchmarks.sh      every navigation evaluation used in the docs
+  make_figures.py        docs/figures/*.png from runs/*.json
+  results_tables.py      the markdown tables above, printed from runs/*.json
+runs/                    checkpoints, training histories, benchmark + cluster results
+tests/                   45 unit / regression tests
+docs/results.md          methods, full tables, ablations, development notes
 ```
 
 ## Quickstart
 
 ```bash
-git clone https://github.com/Aranya2801/<repo-name>.git
-cd <repo-name>
+git clone https://github.com/Aranya2801/AI-Powered-Navigation-for-Autonomous-Vehicles-Real-Time-Hadoop-Cluster-Fault-Detection.git
+cd AI-Powered-Navigation-for-Autonomous-Vehicles-Real-Time-Hadoop-Cluster-Fault-Detection
 pip install -r requirements.txt
+python -m pytest -q
 ```
 
-**Reproduce the benchmark from the provided checkpoint:**
+Evaluate the committed checkpoint against the planners (about a minute on a laptop CPU):
+
 ```bash
 python -m navigation.benchmark \
-    --ppo_checkpoint runs/ppo_v2/policy_checkpoint.pt \
-    --n_episodes 50 --difficulty 1.0 --out runs/benchmark_results.json
+    --ppo_checkpoint "PPO=runs/ppo_s0/policy_checkpoint.pt" \
+    --n_episodes 200 --difficulty 1.0 --out runs/my_benchmark.json
 ```
 
-**Train from scratch:**
+Train a policy (10–20 min on one CPU core):
+
 ```bash
-# 1. Behavior-cloning warm start (solves PPO's cold-start exploration problem —
-#    see docs/module1_results.md for why this step is necessary, not optional)
-python -m navigation.behavior_cloning --demo_episodes 60 --bc_epochs 20 \
-    --out runs/ppo_v1/policy_bc_warmstart.pt
-
-# 2. Curriculum-scheduled PPO fine-tuning (resumable across multiple calls)
-python -m navigation.train_ppo --episodes 2000 --out runs/ppo_v2 \
-    --curriculum_total_episodes 2500 \
-    --warmstart_path runs/ppo_v1/policy_bc_warmstart.pt
-
-# Resume an interrupted run:
-python -m navigation.train_ppo --episodes 400 --out runs/ppo_v2 \
-    --curriculum_total_episodes 2500 --resume
+python -m navigation.train_ppo --episodes 8000 --curriculum_total_episodes 8000 \
+    --ramp_frac 0.5 --lr_anneal --seed 0 --out runs/ppo_s0
 ```
 
-**Run the test suite:**
+Run the cluster experiment (simulate, train, calibrate, evaluate; about 7 min):
+
 ```bash
-pip install pytest
-python -m pytest tests/ -v
+python -m cluster.evaluate --out runs/cluster
 ```
 
-## Design Notes
+Reproduce everything: `scripts/train_all.sh`, `scripts/run_benchmarks.sh`,
+`python -m cluster.evaluate`, then `python scripts/make_figures.py`.
 
-- **No RL library dependency.** PPO (actor-critic network, GAE advantage estimation,
-  clipped surrogate objective, running reward normalization) is implemented directly in
-  PyTorch rather than via Stable-Baselines3, so the actual update math is inspectable
-  and the environment isn't constrained to a particular wrapper API.
-- **Fair comparison by design.** The RL policy never sees ground-truth obstacle
-  positions or true vehicle state — only a noisy EKF-fused estimate from simulated
-  LiDAR/GPS/IMU. Classical planners get true obstacle positions (standard for planning
-  baselines) but not privileged future information.
-- **Curriculum learning, not luck.** Direct diagnosis showed that pure PPO exploration
-  on the full-difficulty task essentially never samples a successful episode (0/40 in
-  one test), even though a trivial heuristic solves it 95% of the time — so there's
-  nothing for policy-gradient updates to reinforce. Behavior-cloning warm start +
-  difficulty curriculum solves this; see the development log for the full diagnosis.
+## Design choices
 
-## Project Philosophy
+- **The policy never sees ground truth.** `ObservationBuilder` only reads the sensor
+  measurement and the goal coordinates. `tests/test_ppo.py` checks that changing
+  `env.state` doesn't change the observation.
+- **Baselines get the true map but the same localisation.** The planners track their
+  path with the EKF pose, so the comparison is about perceiving obstacles, not about
+  localisation. Their inflation margins were tuned on a separate seed range
+  (5000–5059), not on the test seeds.
+- **Three disjoint seed ranges**: training episodes (0–7999), BC demos (200000+) and
+  evaluation (100000–100199).
+- **Detectors are compared at the same alarm logic and false-alarm budget.**
+  Every detector goes through the same k-of-n debounce. Each threshold is picked on
+  validation clusters, and the operating curves in `docs/figures` show the full
+  recall/false-alarm trade-off.
 
-This repository intentionally does not claim a 15-technology, every-box-checked scope.
-An earlier draft of this project's spec called for autonomous driving + Hadoop/Spark/Kafka
-big-data monitoring + a generative AI copilot + Kubernetes/Helm deployment + digital twin
-simulation, all in one shot. Building that as actual, working, verified code in one pass
-isn't realistic — and shipping it as decorative stub files would be worse than not shipping
-it, especially for code meant to be read by an interviewer, professor, or collaborator.
+## Limitations
 
-Instead, each module here is built to a simple bar: **it must actually run, and the
-numbers it reports must be real.** Module 1 took substantially more debugging than
-originally planned (see the development log) precisely because surfacing and fixing real
-bugs — rather than producing code that merely looks plausible — was treated as the point.
-
-## Changelog
-
-See [CHANGELOG.md](CHANGELOG.md) for a detailed module-by-module history, including
-every bug found and fixed during development.
+- Both environments are simulated. The navigation world is 2D with circular
+  obstacles and a kinematic vehicle. The cluster simulator is modelled on Hadoop JMX
+  metrics, but its faults are injected by rules I wrote. I couldn't find public traces
+  with node-level hardware/JVM fault labels, which is what measuring detection delay
+  needs. The cluster numbers show how the methods *compare*. They are not a prediction
+  of performance on a real cluster.
+- The robustness result has a limit: the policy was trained at 1x noise and happens to
+  depend on the parts of the observation that noise scaling hurts least. Noise models
+  that corrupt LiDAR more heavily (rain, reflective surfaces) are not covered.
+- PPO still collides in about 18% of full-difficulty episodes, more often with static
+  obstacles (10.5%) than moving ones (7.0%). It also varies across seeds (76.5–84.5%),
+  so three seeds is the minimum I'd want before trusting a comparison.
+- Memory leaks are found late (median about 70 min) by every detector. That reflects how
+  slowly they ramp up in the simulator. A trend test on the post-GC heap floor would
+  likely do better, and I haven't added one yet.
 
 ## Author
 
-**Aranya Ghosh** — AI/ML Research Engineer, research
-experience at IIIT Nagpur and IIT Kharagpur, BTech IT from KIIT University.
+**Aranya Ghosh**, AI/ML Research Engineer. Research experience at IIIT Nagpur and IIT
+Kharagpur, BTech IT from KIIT University.
 
 - GitHub: [@Aranya2801](https://github.com/Aranya2801)
 
-## License
-
-MIT — see [LICENSE](LICENSE).
+MIT licensed, see [LICENSE](LICENSE).
